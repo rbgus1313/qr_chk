@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="main-head">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    <th:block layout:fragment="title"></th:block>
+
+    <link rel="stylesheet" th:href="@{/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/content.css}" />
+    <link rel="stylesheet" th:href="@{/css/button.css}" />
+
+	<script th:src="@{/js/function.js}"></script>
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <!-- <script src="https://kit.fontawesome.com/79613ae794.js" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+
+
+
+    <th:block layout:fragment="script"></th:block>
+
+    <th:block layout:fragment="add-css"></th:block>
+</head>
+    <th:block layout:fragment="title">
+        <title>글작성 페이지</title>
+    </th:block>
+
+    <th:block layout:fragment="content">
+        <div class="page_tits">
+            <h3 style="font-size: 60px">참석자정보 저장</h3>
+        </div>
+
+        <div class="content">
+            <section>
+            	<div id="loadData">
+            		<input type="hidden" id="bscUserNm" name="bscUserNm" th:if="${bscData != null}" th:value="${bscData.userNm}"/>
+            		<input type="hidden" id="bscSexCd" name="bscSexCd" th:if="${bscData != null}" th:value="${bscData.sexCd}"/>
+            		<input type="hidden" id="bscPhoneNo" name="bscPhoneNo" th:if="${bscData != null}" th:value="${bscData.telNo}"/>
+            	</div>
+                <form id="saveForm" method="post" autocomplete="off">
+                    <input type="hidden" id="attdSn" name="attdSn" th:if="${data != null}" th:value="${data.attdSn}" />
+                    <input type="hidden" id="deviceTypeNm" name="deviceTypeNm" />
+                    <input type="hidden" id="userId" name="userId" />
+                    <table class="tb tb_row">
+                        <colgroup>
+                            <col style="width:30%;" /><col style="width:auto;" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="font-size: 60px">성별</th>
+                                <td>
+                                	<label for="sexCd1"><input type="radio" id="sexCd1" name="sexCd" value="M" checked><span style="font-size: 60px">남성</span></label>
+									<label for="sexCd2"><input type="radio" id="sexCd2" name="sexCd" value="F"><span style="font-size: 60px">여성</span></label>
+                                </td>
+                            </tr>
+							<tr>
+                                <th scope="row" style="font-size: 60px">등록일</th>
+                                <td colspan="3"><input style="font-size: 60px;  height: 60px;" type="text" id="regDttm" name="regDttm" readonly /></td>
+                            </tr>
+                            <tr>
+                                <th style="font-size: 60px">이름<span class="es">필수 입력</span></th>
+                                <td colspan="3"><input style="font-size: 60px;  height: 60px;" type="text" id="userNm" name="userNm" maxlength="10" placeholder="이름을 입력해주세요." /></td>
+                            </tr>
+							<tr>
+                                <th style="font-size: 60px">전화번호(끝 4자리)<span class="es">필수 입력</span></th>
+                                <td colspan="3"><input style="font-size: 60px;  height: 60px;" type="text" id="telNo" name="telNo" maxlength="4" placeholder="전화번호 뒤 4자리를 입력해주세요."/></td>
+                            </tr>
+                            <tr>
+                                <th style="font-size: 60px;">이용시설<span class="es">필수 입력</span></th>
+                                <td colspan="3">
+                                	 <select style="height: 60px; font-size: 60px;" id="useFcltCd" name="useFcltCd">
+								        <option value="">==선택==</option>
+								        <option value="01">복사/프린트</option>
+								        <option value="02">스캔</option>
+								        <option value="03">다락방(최대3시간)</option>
+								        <option value="04">다목적실(3명 이상 신청)</option>
+								        <option value="05">PC사용</option>
+								        <option value="06">공유주방</option>
+								    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th  style="font-size: 60px">내용 <span class="es">필수 입력</span></th>
+                                <td colspan="3"><textarea style="font-size: 60px;" id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해주세요."></textarea></td>
+                            </tr>
+
+                            <tr>
+                            	<th  style="font-size: 60px">사진 <span class="es">필수 입력</span></th>
+                            	<td>
+                            		<label for="camera">
+									  <div class="btn-upload">촬영</div>
+									</label>
+                            		<input style="display: none;" type="file" name="camera" id="camera" accept="image/*" capture="camera">
+                            		<img name="frame" id="frame">
+                            	</td>
+                            </tr>
+                            <tr style="display: none;">
+                            	<th  style="font-size: 60px">Lat <span class="es">필수 입력</span></th>
+                            	<td>
+                            		<input style="font-size: 60px;  height: 60px;" type="text" id="latitude" name="latitude" />
+                            	</td>
+                            	<th  style="font-size: 60px">lon <span class="es">필수 입력</span></th>
+                            	<td>
+                            		<input style="font-size: 60px;  height: 60px;" type="text" id="longitude" name="longitude" />
+                            	</td>
+                            </tr>
+                            <tr>
+                            	<th  style="font-size: 60px">주소</th>
+                            	<td colspan="3">
+                            		<input style="font-size: 60px;  height: 60px;" type="text" id="addr" name="addr" />
+                            	</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <p class="btn_set">
+                    <button style="font-size: 60px; height: 100px; width: 200px;" type="button" id="saveBtn" onclick="saveData();" class="btns btn_st3 btn_mid">저장</button>
+                </p>
+                <!-- <p class="btn_set">
+                    <button style="font-size: 60px; height: 100px; width: 200px;" type="button" id="testbtn" onclick="getAddrNm('36.3478714', '127.3797963');" class="btns btn_st3 btn_mid">저장</button>
+                </p> -->
+            </section>
+        </div> <!--/* .content */-->
+    </th:block>
+
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+
+            window.onload = () => {
+            	renderAttdInfo();
+
+            	var camera = document.getElementById('camera');
+                var frame = document.getElementById('frame');
+
+                camera.addEventListener('change', function(e){
+                	var file = e.target.files[0];
+                	frame.width = 300;
+                    frame.height = 400;
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(success, error);
+                    } else {
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                    frame.src = URL.createObjectURL(file);
+                    /* frame.onload = function() {
+                    	frame.width = this.width * 0.1;
+                    	frame.height = this.height * 0.1;
+                    } */
+                });
+            }
+
+            function success(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                $("#latitude").val(latitude);
+                $("#longitude").val(longitude);
+                getAddrNm(latitude, longitude);
+            }
+
+            function error() {
+                alert("Unable to retrieve your location.");
+            }
+
+            //gps 정보로 주소내용 가져오기(카카오)
+            function getAddrNm(lat, lon) {
+            	var url = 'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=' + lon +'&y=' + lat;
+            	alert(url);
+            	$.ajax({
+            		url : url,
+            	    type : 'GET',
+            	    headers : {
+            	      'Authorization' : 'KakaoAK a32bb640cb0bce4389237c8a9ecd4455'
+            	    },
+            	    success : function(data) {
+            	    	$("#addr").val(data.documents[0].address.address_name);
+            	    },
+            	    error : function(e) {
+            	    	$("#addr").val(e);
+            	    }
+            	  });
+            }
+
+
+            // 출석 상세정보 렌더링
+            function renderAttdInfo() {
+            	history.replaceState({}, null, location.pathname);
+            	var regUserId = [[ ${regUserId} ]];
+            	var isReg = [[ ${isReg} ]];
+            	if(regUserId && isReg) {
+            		setCookie00("regUserId", regUserId, 365);
+            		setCookie00("isReg", isReg, 1);
+            	}
+
+                const data = [[ ${data} ]];
+                if(data) { //상세보기 혹은 수정 페이지
+                	const form = document.getElementById('saveForm');
+                    const fields = ['userId', 'telNo', 'content', 'userNm'];
+                	fields.forEach(field => {
+                        form[field].value = data[field];
+                    });
+                } else { //신규 등록, 전에 등록했던 기록이 있다면
+                	regUserId = getCookie('regUserId');
+                    if(regUserId) {
+                    	updateComment(regUserId);
+                    }
+                }
+
+                initCreatedDate();
+            }
+
+            //사용자 UUID가 있다면 해당 UUID에서 가장 마지막에 작성한 기본데이터를 가져오기
+            function updateComment(regUserId) {
+                var param = {
+                    userId: regUserId
+                };
+                $.ajax({
+                    url: "/post/getBscData.do",
+                    type: "GET",
+                    data: param,
+                })
+                .done(function (fragment) {
+                	$("#loadData").replaceWith(fragment);
+                	const data = [[ ${bscData} ]];
+                	$("#userNm").val($("#bscUserNm").val());
+                	$("#telNo").val($("#bscTelNo").val());
+                	$("input:radio[name='sexCd']:radio[value='"+$("#bscSexCd").val()+"']").prop('checked', true);
+                });
+            }
+
+
+            // 등록일 초기화
+            function initCreatedDate() {
+                document.getElementById('regDttm').value = dayjs().format('YYYY-MM-DD');
+            }
+
+
+            // 게시글 저장(수정)
+            function saveData() {
+            	const isReg = getCookie('isReg');
+            	if(isReg == 'Y') {
+            		alert('이미 오늘 출석을 완료하였습니다.');
+            		return;
+            	}
+
+            	const regUserId = getCookie('regUserId');
+            	if(regUserId) {
+            		document.getElementById('userId').value = regUserId;
+            	}
+                const form = document.getElementById('saveForm');
+                const fields = [form.userNm, form.content];
+                const deviceTypeNm = getOsType();
+
+                document.getElementById('deviceTypeNm').value = deviceTypeNm;
+                const fieldNames = ['이름', '내용'];
+
+                for (let i = 0, len = fields.length; i < len; i++) {
+                    isValid(fields[i], fieldNames[i]);
+                }
+
+                document.getElementById('saveBtn').disabled = true;
+                form.action = [[ ${post == null} ]] ? '/post/save.do' : '/post/update.do';
+                form.submit();
+            }
+
+        /*]]>*/
+        </script>
+    </th:block>
+</html>

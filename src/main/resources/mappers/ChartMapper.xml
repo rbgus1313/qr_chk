@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.domain.chart.ChartMapper">
+
+    <!-- tb_post 테이블 전체 컬럼 -->
+    <sql id="attdInfoColumns">
+          ATTD_SN
+		, USER_ID
+		, REG_DT
+		, USER_NM
+		, TEL_NO
+		, SEX_CD
+		, DEVICE_TYPE_NM
+		, CONTENT
+		, DEL_YN
+		, USE_FCLT_CD
+		, REGR_IP
+		, REG_DTTM
+    </sql>
+
+
+    <!-- 게시글 저장 -->
+    <insert id="attdInfoSave" parameterType="com.study.domain.post.AttdRequest" useGeneratedKeys="true" keyProperty="attdSn">
+        INSERT INTO TB_ATTD_INFO (
+            <include refid="attdInfoColumns" />
+        ) VALUES (
+              #{attdSn}
+            , #{userId}
+            , DATE_FORMAT(NOW(), '%Y%m%d')
+            , #{userNm}
+            , #{telNo}
+            , #{sexCd}
+            , #{deviceTypeNm}
+            , #{content}
+            , 'N'
+            , #{useFcltCd}
+            , NULL
+            , NOW()
+        )
+    </insert>
+
+    <!-- 게시글 상세정보 조회 -->
+    <select id="findByAttdSn" parameterType="long" resultType="com.study.domain.post.AttdResponse">
+      SELECT <include refid="attdInfoColumns" />
+        FROM TB_ATTD_INFO
+	   WHERE ATTD_SN = #{value}
+    </select>
+
+    <!-- 직전 출석체크 정보 조회 -->
+    <select id="findByUserId" parameterType="String" resultType="com.study.domain.post.AttdResponse">
+      SELECT <include refid="attdInfoColumns" />
+        FROM TB_ATTD_INFO
+	   WHERE ATTD_SN = (SELECT MAX(ATTD_SN)
+						  FROM TB_ATTD_INFO
+						 WHERE USER_ID = #{value}
+						 GROUP BY USER_ID)
+    </select>
+
+
+    <!-- 게시글 수정 -->
+    <update id="updateAttdInfo" parameterType="com.study.domain.post.AttdRequest">
+        UPDATE TB_ATTD_INFO
+           SET MOD_DT = NOW()
+             , CONTENT = #{content}
+             , USER_NM = #{userNm}
+         WHERE ATTD_SN = #{attdSn}
+    </update>
+
+
+    <!-- 게시글 삭제 -->
+    <delete id="deleteByAttdSn" parameterType="long">
+        UPDATE TB_ATTD_INFO
+           SET DEL_YN = 'Y'
+         WHERE ATTD_SN = #{attdSn}
+    </delete>
+
+
+    <!-- 게시글 리스트 조회 -->
+    <select id="findAll" resultType="com.study.domain.post.AttdResponse">
+        SELECT ATTD_SN
+			 , USER_ID
+			 , REG_DT
+			 , USER_NM
+			 , TEL_NO
+			 , SEX_CD
+			 , DEVICE_TYPE_NM
+			 , CONTENT
+			 , DEL_YN
+			 , USE_FCLT_CD
+			 , (SELECT COM_CD_NM FROM TB_COM_CD TCC WHERE COM_GRP_CD = 'USE_FCLT_CD' AND COM_CD = USE_FCLT_CD) AS USE_FCLT_NM
+			 , REGR_IP
+			 , REG_DTTM
+        FROM TB_ATTD_INFO
+        WHERE DEL_YN = 'N'
+        ORDER BY ATTD_SN DESC
+    </select>
+
+</mapper>
