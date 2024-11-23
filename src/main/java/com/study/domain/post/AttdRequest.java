@@ -16,4 +16,6 @@ public class AttdRequest {
 	private String content;				//내용
 	private String delYn;				//삭제여부
 	private String useFcltCd;			//사용시설코드
+	private String slctTypeCd;
+	private String srchTxt;
 }

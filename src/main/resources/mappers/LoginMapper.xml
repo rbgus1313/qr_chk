@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.domain.com.login.LoginMapper">
+
+    <!-- tb_user 테이블 전체 컬럼 -->
+    <sql id="attdInfoColumns">
+          USER_NO
+		, USER_ID
+		, USER_PW
+		, USER_NM
+		, USER_CD
+		, REGR_ID
+		, REGR_IP
+		, REG_DTTM
+		, UPTR_ID
+		, UPTR_IP
+		, UPDT_DTTM
+    </sql>
+
+    <!-- 사용자 정보 조회 -->
+    <select id="getUserInfo" parameterType="com.study.domain.com.login.LoginRequest" resultType="com.study.domain.com.login.LoginResponse">
+      SELECT <include refid="attdInfoColumns" />
+        FROM TB_USER
+	   WHERE USER_ID = #{loginId}
+    </select>
+</mapper>

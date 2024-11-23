@@ -3,11 +3,19 @@
 <body th:fragment="main-body">
     <div id="adm_wrap">
         <header>
-            <div class="head">
-                <h1>동거동락 프로젝트</h1>
-                <div class="top_menu">
-                    <div class="login_user"><strong><i class="far fa-user-circle"></i> 관리자</strong>님 반갑습니다.</div>
-                    <div class="logout"><button type="button" onclick="javascript: alert('준비 중입니다.');"><span class="skip_info">로그아웃</span><i class="fas fa-sign-out-alt"></i></button></div>
+            <div class="head d-flex justify-s align-c">
+                <p class="f-b f-title">동구동락 프로젝트</p>
+                <div class="top_menu d-flex align-c f-add">
+                    <div class="login_user">
+                    	<p><span class="f-b"><i class="far fa-user-circle"></i> 관리자 </span>님 반갑습니다.</p>
+                    </div>
+                    <div class="logout">
+	                    <form action="/logout" method="post">
+	                    	<button class="bg-dark80" type="submit">
+	                    		<span class="skip_info">로그아웃</span><i class="f-white fas fa-sign-out-alt"></i>
+	                    	</button>
+	                    </form>
+                    </div>
                 </div>
             </div>
         </header>
@@ -19,14 +27,15 @@
                 <!--/* 메뉴 */-->
                 <nav>
                     <ul>
-                        <li class="has_sub"><a href="javascript: void(0);" class="on"><span>게시판 관리</span></a>
+                        <li class="has_sub"><a id="boardMenu" href="javascript: void(0);"><span class="f-b">게시판 관리</span></a>
                             <ul>
-                                <li><a href="/post/list.do" class="on">동거동락 참여자 목록</a></li>
+                                <li><a id="boardMenu1" href="/post/list.do">참여자 목록</a></li>
                             </ul>
                         </li>
-                        <li class="has_sub"><a href="javascript: void(0);" class="off"><span>통계</span></a>
+                        <li class="has_sub"><a id="staticsMenu" href="javascript: void(0);" class="off"><span class="f-b">통계</span></a>
                             <ul>
-                                <li><a href="/chart/view.do" class="off">시설별 사용 통계</a></li>
+                                <li><a id="staticsMenu1" href="/chart/useFcltCdView.do" class="off">시설별 사용 통계</a></li>
+                                <li><a id="staticsMenu2" href="/chart/userStaticsView.do" class="off">사용자별 사용 통계</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -49,6 +58,7 @@
     <script th:src="@{/js/common.js}"></script>
     <script src="https://kit.fontawesome.com/79613ae794.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"> </script>
 
     <th:block layout:fragment="script"></th:block>
 </body>

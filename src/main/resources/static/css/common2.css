@@ -1,0 +1,131 @@
+@charset "utf-8";
+
+/*
+:root {
+    accent-color:#11E173;
+    accent-color: rgb(12,255,115);
+    accent-color: hsl(144%,86%,47%);
+}
+*/
+body {
+	margin: 0 auto;
+	width: 100%;
+}
+
+ul, li {
+	list-style: none;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.mobile-only {
+	display: none;
+}
+
+button {
+	border: none;
+}
+
+
+input:focus, textarea:focus {
+	box-shadow: 0px 0px 3px #87EFB8;
+}
+
+input[type=radio] {
+	box-shadow: none;
+}
+
+.d-flex {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.d-flex-c {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+
+.justify-c {
+	-webkit-box-pack: center;
+	-moz-box-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+}
+
+.justify-s {
+	-webkit-box-pack: justify;
+	-moz-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.align-c {
+	-webkit-box-align: center;
+	-moz-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.align-s {
+	-webkit-box-align: stretch;
+	-moz-align-items: stretch;
+	-ms-flex-align: stretch;
+	align-items: stretch;
+}
+
+.bg-primary {
+	background-color: #11E173;
+}
+
+.bg-primary50 {
+	background-color: #87EFB8;
+}
+
+.bg-primary10 {
+	background-color: #E8FCF1;
+}
+
+.bg-white {
+	background-color: white;
+}
+
+.bg-dark {
+	background-color: #04170D;
+}
+
+.bg-dark80 {
+	background-color: #36453D;
+}
+
+.bg-dark50 {
+	background-color: #818A85;
+}
+
+.bg-dark20 {
+	background-color: #CDD1CF;
+}
+
+.bg-dark5 {
+	background-color: #F2F3F3;
+}
+
+/* 모바일 반응형 */
+@media all and (max-width: 768px) {
+	.mobile-only {
+		display: block;
+	}
+	.mobile-none {
+		display: none;
+	}
+}

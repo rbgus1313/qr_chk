@@ -1,6 +1,5 @@
 package com.study.domain.post;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,7 @@ public class AttdController {
     						 Model model) {
     	AttdResponse data = postService.findByUserId(userId);
     	model.addAttribute("bscData", data);
-        return "post/write :: #loadData";
+        return "post/popWrite :: #loadData";
     }
 
 
@@ -48,17 +47,26 @@ public class AttdController {
         	model.addAttribute("regUserId", regId);
         	model.addAttribute("isReg", isReg);
         }
-        return "post/write";
+        return "post/mobWrite";
     }
 
 
     // 게시글 리스트 페이지
     @GetMapping("/post/list.do")
-    public String openPostList(Model model) {
-        List<AttdResponse> posts = postService.findAllPost();
+    public String openPostList(AttdRequest param, Model model) {
+        List<AttdResponse> posts = postService.findAllPost(param);
         model.addAttribute("list", posts);
         return "post/list";
     }
+
+    // 게시글 리스트 페이지
+    @GetMapping("/post/search.do")
+    public String search(AttdRequest param, Model model) {
+        List<AttdResponse> posts = postService.findAllPost(param);
+        model.addAttribute("list", posts);
+        return "post/list ::#content";
+    }
+
 
 
     // 게시글 상세 페이지
@@ -66,7 +74,7 @@ public class AttdController {
     public String openPostView(@RequestParam final Long id, Model model) {
         AttdResponse post = postService.findByAttdSn(id);
         model.addAttribute("data", post);
-        return "post/view";
+        return "post/popView";
     }
 
 
@@ -74,7 +82,7 @@ public class AttdController {
     @PostMapping("/post/save.do")
     public String savePost(final AttdRequest params, Model model) {
         Map<String, Object> resultMap = postService.attdInfoSave(params);
-        MessageDto message = new MessageDto("게시글 생성이 완료되었습니다.", "/post/write.do", RequestMethod.GET, resultMap);
+        MessageDto message = new MessageDto("게시글 생성이 완료되었습니다.", "/post/mobWrite.do", RequestMethod.GET, resultMap);
         return showMessageAndRedirect(message, model);
     }
 
@@ -83,7 +91,7 @@ public class AttdController {
     @PostMapping("/post/update.do")
     public String updatePost(final AttdRequest params, Model model) {
         postService.updateAttdInfo(params);
-        MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/post/write.do", RequestMethod.GET, null);
+        MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/post/mobWrite.do", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
 

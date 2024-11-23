@@ -8,8 +8,10 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.common.dto.MessageDto;
+import com.study.domain.post.AttdRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,40 +19,49 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChartController {
 
-    private final ChartService postService;
+	private final ChartService postService;
 
-    // 사용자에게 메시지를 전달하고, 페이지를 리다이렉트 한다.
-    private String showMessageAndRedirect(final MessageDto params, Model model) {
-        model.addAttribute("params", params);
-        return "common/messageRedirect";
-    }
+	// 사용자에게 메시지를 전달하고, 페이지를 리다이렉트 한다.
+	private String showMessageAndRedirect(final MessageDto params, Model model) {
+		model.addAttribute("params", params);
+		return "common/messageRedirect";
+	}
 
-    // 통계 페이지 로드
-    @GetMapping("/chart/view.do")
-    public String openPostList(Model model) {
-		/*
-		 * List<ChartResponse> posts = postService.findAllPost();
-		 * model.addAttribute("list", posts);
-		 */
+	// 시설별 통계 페이지 로드
+	@GetMapping("/chart/useFcltCdView.do")
+	public String useFcltCdView(ChartRequest params, Model model) {
+		List<ChartResponse> data = postService.getListByUseFlctCd();
+		model.addAttribute("data", data);
+		model.addAttribute("data2", data);
 
-    	List<Map<Object,Object>> dataPoints1 = new ArrayList<Map<Object,Object>>();
-		Map<Object , Object> map1 = new HashMap<Object,Object>();
-		map1.put("label", "Chrome");
-		map1.put("y", 51.08);
-		dataPoints1.add(map1);
+		return "chart/fcltStatistics";
+	}
 
-		Map<Object , Object> map2 = new HashMap<Object,Object>();
-		map2.put("label", "Internet Explorer");
-		map2.put("y", 27.34);
-		dataPoints1.add(map2);
+	// 사용자별 통계 페이지 로드
+	@GetMapping("/chart/userStaticsView.do")
+	public String userStaticsView(UseFcltVO params, Model model) {
+		//통계 그리드 컬럼 목록 조회
+		List<UseFcltVO> colList = postService.getUseFcltColList();
+		model.addAttribute("colList", colList);
 
-		Map<Object , Object> map3 = new HashMap<Object,Object>();
-		map3.put("label", "Firefox");
-		map3.put("y", 10.62);
-		dataPoints1.add(map3);
+		//실제 통계 정보 조회
+		List<UseFcltVO> data = postService.getUseFcltDataList(params);
+		model.addAttribute("data", data);
 
-//    	model.addObject("dataPointsList", dataPoints1);
+		return "chart/userStatistics";
+	}
 
-        return "post/chart";
-    }
+	// 시설별 통계 검색
+	@GetMapping("/chart/userStaticsSrch.do")
+	public String useFcltCdSrch(UseFcltVO params, Model model) {
+		//통계 그리드 컬럼 목록 조회
+		List<UseFcltVO> colList = postService.getUseFcltColList();
+		model.addAttribute("colList", colList);
+
+		//실제 통계 정보 조회
+		List<UseFcltVO> data = postService.getUseFcltDataList(params);
+		model.addAttribute("data", data);
+
+		return "chart/userStatistics ::#content";
+	}
 }

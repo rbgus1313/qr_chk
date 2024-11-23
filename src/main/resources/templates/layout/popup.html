@@ -5,15 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <th:block layout:fragment="title"></th:block>
-
     <link rel="stylesheet" th:href="@{/css/default.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link rel="stylesheet" th:href="@{/css/common2.css}" />
     <link rel="stylesheet" th:href="@{/css/manage.css}" />
     <link rel="stylesheet" th:href="@{/css/content.css}" />
     <link rel="stylesheet" th:href="@{/css/font.css}" />
-
-    <th:block layout:fragment="add-css"></th:block>
 </head>
+<body th:fragment="main-body">
+	<th:block layout:fragment="content"></th:block>
+</body>
 </html>

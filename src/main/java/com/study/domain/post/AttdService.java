@@ -77,7 +77,7 @@ public class AttdService {
      * 게시글 리스트 조회
      * @return 게시글 리스트
      */
-    public List<AttdResponse> findAllPost() {
-        return attdMapper.findAll();
+    public List<AttdResponse> findAllPost(AttdRequest param) {
+        return attdMapper.findAll(param);
     }
 }

@@ -77,7 +77,7 @@
 
 
     <!-- 게시글 리스트 조회 -->
-    <select id="findAll" resultType="com.study.domain.post.AttdResponse">
+    <select id="findAll" parameterType="com.study.domain.post.AttdRequest" resultType="com.study.domain.post.AttdResponse">
         SELECT ATTD_SN
 			 , USER_ID
 			 , REG_DT
@@ -93,6 +93,20 @@
 			 , REG_DTTM
         FROM TB_ATTD_INFO
         WHERE DEL_YN = 'N'
+       	<if test='slctTypeCd== "00"'>
+   			AND (USER_NM LIKE CONCAT('%', #{srchTxt}, '%') OR
+   				 CONTENT LIKE CONCAT('%', #{srchTxt}, '%') OR
+   				 (SELECT COM_CD_NM FROM TB_COM_CD TCC WHERE COM_GRP_CD = 'USE_FCLT_CD' AND COM_CD = USE_FCLT_CD) LIKE CONCAT('%', #{srchTxt}, '%'))
+		</if>
+        <if test='slctTypeCd== "01"'>
+   			AND USER_NM LIKE CONCAT('%', #{srchTxt}, '%')
+		</if>
+         	<if test='slctTypeCd== "02"'>
+   			AND CONTENT LIKE CONCAT('%', #{srchTxt}, '%')
+		</if>
+		<if test='slctTypeCd== "03"'>
+   			AND (SELECT COM_CD_NM FROM TB_COM_CD TCC WHERE COM_GRP_CD = 'USE_FCLT_CD' AND COM_CD = USE_FCLT_CD) LIKE CONCAT('%', #{srchTxt}, '%')
+		</if>
         ORDER BY ATTD_SN DESC
     </select>
 

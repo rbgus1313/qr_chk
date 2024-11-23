@@ -6,11 +6,11 @@
 
     <th:block layout:fragment="content">
         <div class="content-title d-flex justify-s align-c">
-        	<p class="f-title-sm f-b">참여자 목록</p>
+        	<p class="f-title-sm f-b">사용자별 사용 통계</p>
             <p class="path f-add f-dark80 tab-none">
             	<span class="f-b">현재 위치 :</span>
-            	<span>게시판 관리</span>
-            	<span>참여자 목록</span>
+            	<span>통계</span>
+            	<span>사용자별 사용 통계</span>
             	<span>목록</span>
             </p>
         </div>
@@ -20,13 +20,12 @@
                 <!--/* 검색 */-->
                 <div class="search_box d-flex align-c bg-dark5">
                 	<span class="search-title f-b tab-none">검색</span>
-                    <form id="searchForm" name="searchForm" onsubmit="return false">
+                    <form id="searchForm" onsubmit="return false;" autocomplete="off">
                         <div class="sch_group d-flex">
-                            <select id="slctTypeCd" name="slctTypeCd" title="검색 유형 선택">
+                            <select  id="slctTypeCd" name="slctTypeCd" title="검색 유형 선택">
                                 <option value="00">전체 검색</option>
                                 <option value="01">사용자명</option>
-                                <option value="02">내용</option>
-                                <option value="03">이용시설</option>
+                                <option value="02">번호</option>
                             </select>
                             <input id="srchTxt" name="srchTxt" type="text" placeholder="키워드를 입력해 주세요." title="키워드 입력"/>
                             <button type="button" class="bt_search bg-dark50 f-white f-b" onclick="doSearch();"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
@@ -40,40 +39,33 @@
     	                <colgroup>
         	                <col style="width:5%;"/>
             	            <col class="tab-none" style="width:7.5%;"/>
-                	        <col style="width:10%;"/>
-                    	    <col style="width:30%;"/>
-                        	<col style="width:10%;"/>
-	                        <col style="width:15%;"/>
-    	                    <col style="width:10%;"/>
-        	                <col style="width:15%;"/>
+            	            <col style="width:15%;"/>
+            	            <col style="width:10%;" th:if="${not #lists.isEmpty( colList )}" th:each="row, status : ${colList}"></col>
             	        </colgroup>
                 	    <thead class="f-add f-dark80 bg-dark5">
                     	    <tr>
                         	    <th scope="col"><input type="checkbox"/></th>
 	                            <th class="tab-none" scope="col">번호</th>
-    	                        <th scope="col">사용자명</th>
-        	                    <th scope="col">내용</th>
-            	                <th scope="col">성별</th>
-                	            <th scope="col">이용시설</th>
-                    	        <th scope="col">단말기ID</th>
-                        	    <th scope="col">등록일</th>
+	                            <th class="tab-none" scope="col">성명</th>
+	                            <th class="tab-none" scope="col" th:if="${not #lists.isEmpty( colList )}" th:each="row, status : ${colList}" th:text="${row.colNm}"></th>
 	                        </tr>
     	                </thead>
         	            <tbody>
-            	            <tr th:if="${not #lists.isEmpty( list )}" th:each="row, status : ${list}">
+            	            <tr th:if="${not #lists.isEmpty( data )}" th:each="row, status : ${data}">
                 	            <td><input type="checkbox"/></td>
-                    	        <td class="tab-none" th:text="${row.attdSn}"></td>
-                        	    <!-- <td ><a th:href="@{/post/view.do( id=${row.attdSn} )}" th:text="${row.userNm}"></a></td> -->
-                        	    <td><a th:onclick="|onClickCell(${row.attdSn})|" th:text="${row.userNm}"></a></td>
-                            	<td class="t-l table-detail" th:text="${row.content}"></td>
-	                            <td th:text="${row.sexCd == 'M' ? '남성' : '여성'}"></td>
-    	                        <td th:text="${row.useFcltNm}"></td>
-        	                	<td th:text="${row.deviceTypeNm}"></td>
-            	        		<td th:text="${#temporals.format( row.regDttm, 'yyyy-MM-dd HH:mm' )}"></td>
+                    	        <td class="tab-none" th:text="${row.telNo}"></td>
+                        	    <td ><a th:href="@{/post/view.do( telNo=${row.telNo}, userNm=${row.userNm} )}" th:text="${row.userNm}"></a></td>
+    	                        <td th:text="${row.useFcltCd01}"></td>
+    	                        <td th:text="${row.useFcltCd02}"></td>
+    	                        <td th:text="${row.useFcltCd03}"></td>
+    	                        <td th:text="${row.useFcltCd04}"></td>
+    	                        <td th:text="${row.useFcltCd05}"></td>
+    	                        <td th:text="${row.useFcltCd06}"></td>
+    	                        <td th:text="${row.useFcltCd07}"></td>
                 		    </tr>
 
-    	        	        <tr th:unless="${not #lists.isEmpty( list )}">
-        		        		<td colspan="5">
+    	        	        <tr th:unless="${not #lists.isEmpty( data )}">
+        		        		<td colspan="10">
             	        			<div class="no_data_msg">검색된 결과가 없습니다.</div>
                 	    		</td>
                     		</tr>
@@ -100,11 +92,11 @@
         	$(document).ready(function(){
         		$('.has_sub').find('a').attr('class', 'off');
 
-        		$("#boardMenu").attr('class','on');
-        		$("#boardMenu1").attr('class','on');
+        		$("#staticsMenu").attr('class','on');
+        		$("#staticsMenu2").attr('class','on');
         	});
 
-          	//검색버튼 이벤트
+        	//검색버튼 이벤트
             function doSearch() {
             	const form = document.getElementById('searchForm');
             	var slctTypeCd = form.slctTypeCd.value;
@@ -115,18 +107,15 @@
                 		srchTxt: srchTxt
                 };
                 $.ajax({
-                    url: "/post/search.do",
+                    url: "/chart/userStaticsSrch.do",
                     type: "GET",
                     data: param,
                 })
                 .done(function (fragment) {
+                	debugger;
                 	$("#content").replaceWith(fragment);
                 });
             }
-
-          	function onClickCell(id) {
-          		window.open("/post/view.do?id="+id, "member", "width=340, height=300")
-          	}
         /*]]>*/
         </script>
     </th:block>

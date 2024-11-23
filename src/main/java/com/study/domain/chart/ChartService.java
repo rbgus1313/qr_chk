@@ -1,14 +1,8 @@
 package com.study.domain.chart;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,68 +10,29 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChartService {
 
-    private final ChartMapper attdMapper;
+    private final ChartMapper ChartMapper;
 
     /**
-     * 게시글 저장
-     * @param params - 게시글 정보
-     * @return Generated PK
+     * 시설별 사용자 사용 횟수 조회
+     * @return 사용 횟수 정보 조회
      */
-    @Transactional
-    public Map<String, Object> attdInfoSave(final ChartRequest params) {
-    	Map<String, Object> resultMap = new HashMap<String, Object>();
-    	if(ObjectUtils.isEmpty(params.getUserId())) {
-    		params.setUserId(UUID.randomUUID().toString());
-    	}
-    	resultMap.put("regUserId", params.getUserId());
-    	resultMap.put("isReg", attdMapper.attdInfoSave(params) > 0 ? "Y" : "N");
-        return resultMap;
+    public List<ChartResponse> getListByUseFlctCd() {
+        return ChartMapper.getListByUseFlctCd();
     }
 
     /**
-     * 게시글 상세정보 조회
-     * @param id - PK
-     * @return 게시글 상세정보
+     * 사용자별 통계 화면 그리드 컬럼 조회(그리드에서 보여줄 컬럼 목록 조회, 시설유형)
+     * @return 컬럼명 목록
      */
-    public ChartResponse findByAttdSn(final long AttdSn) {
-        return attdMapper.findByAttdSn(AttdSn);
+    public List<UseFcltVO> getUseFcltColList() {
+        return ChartMapper.getUseFcltColList();
     }
 
     /**
-     * 전에 작성한 출석체크 내용 조회
-     * @param id
-     * @return 전에 작성한 출석체크 내용
+     * 사용자별 사용시설 통계 목록 조회(view 테이블에서 그대로 조회함)
+     * @return 사용자별 사용시설 통계 목록
      */
-    public ChartResponse findByUserId(final String userId) {
-        return attdMapper.findByUserId(userId);
-    }
-
-    /**
-     * 게시글 수정
-     * @param params - 게시글 정보
-     * @return PK
-     */
-    @Transactional
-    public Long updateAttdInfo(final ChartRequest params) {
-    	attdMapper.updateAttdInfo(params);
-        return params.getAttdSn();
-    }
-
-    /**
-     * 게시글 삭제
-     * @param id - PK
-     * @return PK
-     */
-    public Long deleteByAttdSn(final Long id) {
-    	attdMapper.deleteByAttdSn(id);
-        return id;
-    }
-
-    /**
-     * 게시글 리스트 조회
-     * @return 게시글 리스트
-     */
-    public List<ChartResponse> findAllPost() {
-        return attdMapper.findAll();
+    public List<UseFcltVO> getUseFcltDataList(UseFcltVO params) {
+        return ChartMapper.getUseFcltDataList(params);
     }
 }

@@ -3,13 +3,14 @@
 <head th:fragment="main-head">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <th:block layout:fragment="title"></th:block>
 
     <link rel="stylesheet" th:href="@{/css/default.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
-    <link rel="stylesheet" th:href="@{/css/content.css}" />
-    <link rel="stylesheet" th:href="@{/css/button.css}" />
+    <link rel="stylesheet" th:href="@{/css/common2.css}" />
+    <link rel="stylesheet" th:href="@{/css/font.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
 
 	<script th:src="@{/js/function.js}"></script>
     <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
@@ -29,7 +30,10 @@
 
     <th:block layout:fragment="content">
         <div class="page_tits">
-            <h3 style="font-size: 60px">참석자정보 저장</h3>
+	    	<div class="logo-box">
+		    	<img class="client-logo" src="/images/client_logo.svg" alt="동구동락 로고" />
+    		</div>
+        	<p class="main-title f-title f-b">참석자정보 저장</p>
         </div>
 
         <div class="content">
@@ -43,35 +47,51 @@
                     <input type="hidden" id="attdSn" name="attdSn" th:if="${data != null}" th:value="${data.attdSn}" />
                     <input type="hidden" id="deviceTypeNm" name="deviceTypeNm" />
                     <input type="hidden" id="userId" name="userId" />
-                    <table class="tb tb_row">
-                        <colgroup>
+
+                    <table class="main-table ">
+
+                        <!-- <colgroup>
                             <col style="width:30%;" /><col style="width:auto;" />
-                        </colgroup>
+                        </colgroup> -->
+
                         <tbody>
                             <tr>
-                                <th scope="row" style="font-size: 60px">성별</th>
-                                <td>
-                                	<label for="sexCd1"><input type="radio" id="sexCd1" name="sexCd" value="M" checked><span style="font-size: 60px">남성</span></label>
-									<label for="sexCd2"><input type="radio" id="sexCd2" name="sexCd" value="F"><span style="font-size: 60px">여성</span></label>
+                                <th scope="row">성별</th>
+                                <td class="default bg-dark5 d-flex-c">
+                                	<span class="f-add f-dark80">성별</span>
+                                	<div class="d-flex">
+                                		<label for="sexCd1"><input type="radio" id="sexCd1" name="sexCd" value="M" checked><span>남성</span></label>
+										<label for="sexCd2"><input type="radio" id="sexCd2" name="sexCd" value="F"><span>여성</span></label>
+                                	</div>
                                 </td>
                             </tr>
 							<tr>
-                                <th scope="row" style="font-size: 60px">등록일</th>
-                                <td colspan="3"><input style="font-size: 60px;  height: 60px;" type="text" id="regDttm" name="regDttm" readonly /></td>
+                                <th scope="row">등록일</th>
+                                <td class=" d-flex-c">
+                                	<span class="f-add f-dark80">등록일</span>
+                                	<input type="text" id="regDttm" name="regDttm" readonly />
+                                </td>
                             </tr>
                             <tr>
-                                <th style="font-size: 60px">이름<span class="es">필수 입력</span></th>
-                                <td colspan="3"><input style="font-size: 60px;  height: 60px;" type="text" id="userNm" name="userNm" maxlength="10" placeholder="이름을 입력해주세요." /></td>
+                                <th>이름<span class="es">필수 입력</span></th>
+                                <td class=" d-flex-c">
+                                	<span class="f-add f-dark80">이름</span>
+                                	<input type="text" id="userNm" name="userNm" maxlength="10" placeholder="이름을 입력해주세요" />
+                                </td>
                             </tr>
 							<tr>
-                                <th style="font-size: 60px">전화번호(끝 4자리)<span class="es">필수 입력</span></th>
-                                <td colspan="3"><input style="font-size: 60px;  height: 60px;" type="text" id="telNo" name="telNo" maxlength="4" placeholder="전화번호 뒤 4자리를 입력해주세요."/></td>
+                                <th>전화번호 끝 4자리<span class="es">필수 입력</span></th>
+                                <td class=" d-flex-c">
+                                	<span class="f-add f-dark80">전화번호 끝 4자리</span>
+                                	<input type="text" id="telNo" name="telNo" maxlength="4" placeholder="전화번호 뒤 4자리를 입력해주세요"/>
+                                </td>
                             </tr>
                             <tr>
-                                <th style="font-size: 60px;">이용시설<span class="es">필수 입력</span></th>
-                                <td colspan="3">
-                                	 <select style="height: 60px; font-size: 60px;" id="useFcltCd" name="useFcltCd">
-								        <option value="">==선택==</option>
+                                <th>이용시설<span class="es">필수 입력</span></th>
+                                <td class="default bg-dark5 d-flex-c">
+                                	<span class="f-add f-dark80">이용시설</span>
+                                	<select class="bg-dark20" id="useFcltCd" name="useFcltCd">
+										<option value="">선택</option>
 								        <option value="01">복사/프린트</option>
 								        <option value="02">스캔</option>
 								        <option value="03">다락방(최대3시간)</option>
@@ -83,42 +103,45 @@
                             </tr>
 
                             <tr>
-                                <th  style="font-size: 60px">내용 <span class="es">필수 입력</span></th>
-                                <td colspan="3"><textarea style="font-size: 60px;" id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해주세요."></textarea></td>
+                                <th>내용 <span class="es">필수 입력</span></th>
+                                <td class="no-over d-flex-c">
+                                	<span class="f-add f-dark80">내용</span>
+                                	<textarea id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해주세요"></textarea>
+                                </td>
                             </tr>
 
                             <tr>
-                            	<th  style="font-size: 60px">사진 <span class="es">필수 입력</span></th>
-                            	<td>
+                            	<th>사진 <span class="es">필수 입력</span></th>
+                                <td class="default bg-dark5 d-flex-c">
+                                	<span class="f-add f-dark80">사진</span>
                             		<label for="camera">
-									  <div class="btn-upload">촬영</div>
+                            			<div class="btn-upload">촬영</div>
 									</label>
                             		<input style="display: none;" type="file" name="camera" id="camera" accept="image/*" capture="camera">
                             		<img name="frame" id="frame">
                             	</td>
                             </tr>
                             <tr style="display: none;">
-                            	<th  style="font-size: 60px">Lat <span class="es">필수 입력</span></th>
+                            	<th>Lat <span class="es">필수 입력</span></th>
                             	<td>
-                            		<input style="font-size: 60px;  height: 60px;" type="text" id="latitude" name="latitude" />
+                            		<input style="height: 60px;" type="text" id="latitude" name="latitude" />
                             	</td>
-                            	<th  style="font-size: 60px">lon <span class="es">필수 입력</span></th>
+                            	<th>lon <span class="es">필수 입력</span></th>
                             	<td>
                             		<input style="font-size: 60px;  height: 60px;" type="text" id="longitude" name="longitude" />
                             	</td>
                             </tr>
                             <tr>
-                            	<th  style="font-size: 60px">주소</th>
-                            	<td colspan="3">
-                            		<input style="font-size: 60px;  height: 60px;" type="text" id="addr" name="addr" />
+                            	<th>주소</th>
+                                <td class="d-flex-c">
+                                	<span class="f-add f-dark80">주소</span>
+                            		<input type="text" id="addr" name="addr" />
                             	</td>
                             </tr>
                         </tbody>
                     </table>
                 </form>
-                <p class="btn_set">
-                    <button style="font-size: 60px; height: 100px; width: 200px;" type="button" id="saveBtn" onclick="saveData();" class="btns btn_st3 btn_mid">저장</button>
-                </p>
+                    <button class="f-body f-b f-dark" type="button" id="saveBtn" onclick="saveData();" >저장</button>
                 <!-- <p class="btn_set">
                     <button style="font-size: 60px; height: 100px; width: 200px;" type="button" id="testbtn" onclick="getAddrNm('36.3478714', '127.3797963');" class="btns btn_st3 btn_mid">저장</button>
                 </p> -->

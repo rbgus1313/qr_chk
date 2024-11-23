@@ -44,7 +44,7 @@ public interface AttdMapper {
      * 게시글 리스트 조회
      * @return 게시글 리스트
      */
-    List<AttdResponse> findAll();
+    List<AttdResponse> findAll(AttdRequest param);
 
     /**
      * 게시글 수 카운팅

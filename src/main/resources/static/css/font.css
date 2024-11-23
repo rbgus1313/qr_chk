@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+/* font */
+@font-face {
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+	src:
+		url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+		format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
+
+html, body, a, input, textarea, select, button {
+	font-family: 'Pretendard';
+	color: #04170D;
+}
+
+html, body {
+	font-size: 20px;
+	font-weight: 400;
+}
+
+input::placeholder {
+	color: #CDD1CF;
+}
+
+/* 폰트 사이즈 */
+.f-body {
+	font-size: 1rem;
+}
+
+.f-title {
+	font-size: 1.6rem;
+}
+
+.f-title-sm {
+	font-size: 1.3rem;
+}
+
+.f-add {
+	font-size: 0.9rem;
+}
+
+.f-sm {
+	font-size: 0.6rem;
+}
+
+.f-b {
+	font-weight: 700;
+}
+
+.main-table th {
+	display: none;
+}
+
+/* 색상 */
+
+.f-dark {
+	color: #04170D;
+}
+
+.f-dark80 {
+	color: #36453D;
+}
+
+.f-dark50 {
+	color: #818A85;
+}
+.f-white {
+	color: white;
+}
+
+/* 텍스트 정렬 */
+.t-c {
+	text-align: center;
+}
+
+.t-l {
+	text-align: left;
+}
+
+.t-r {
+	text-align: right;
+}
+
+/* 태블릿 반응형 */
+@media all and (min-width: 768px) {
+	html, body {
+		font-size: 24px;
+	}
+}
+
+/* PC 반응형 */
+@media all and (min-width: 1024px) {
+	html, body {
+		font-size: 18px;
+	}
+}

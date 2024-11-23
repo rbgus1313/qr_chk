@@ -1,0 +1,146 @@
+@charset "utf-8";
+
+
+body {
+	margin: 0 auto;
+	width: 100%;
+	padding: 20px 16px 80px 16px;
+	box-sizing: border-box;
+}
+
+/* form 기본스타일 */
+input[type=text], input[type="password"], input[type="search"], input[type="email"],
+	input[type="url"], input[type="number"], input[type="tel"], input[type="date"],
+	select, textarea {
+	background: transparent;
+	border: none;
+	padding: 0;
+	height: auto;
+	font-size: 1rem;
+}
+
+input[readonly], select[readonly], textarea[readonly], .readonly, input[disabled],
+	select[disabled], textarea[disabled], .disabled {
+	color: #818A85;
+} /* 입력불가 */
+input[readonly]:focus, select[readonly]:focus, textarea[readonly]:focus,
+	.readonly:focus, input[disabled]:focus, select[disabled]:focus,
+	textarea[disabled]:focus, .disabled:focus {
+	box-shadow: none;
+} /* 입력불가 */
+
+/* 로고, 타이틀 */
+.logo-box {
+	width: 140px;
+}
+
+.logo-box img {
+	width: 100%;
+}
+
+.main-title {
+	margin: 40px 0 20px 0;
+}
+
+.main-table {
+	width: 100%;
+}
+
+.main-table td {
+	margin-top: 12px;
+	position: relative;
+}
+
+.main-table td>.f-add {
+	position: absolute;
+	z-index: 10;
+	top: 12px;
+	left: 18px;
+}
+
+.main-table input, .main-table textarea {
+	background: #F2F3F3;
+	padding: 40px 18px 12px 18px;
+	border-radius: 8px;
+	position: relative;
+}
+
+/* 포커스 안되는 영역 */
+td.default {
+	padding: 12px 18px;
+	border-radius: 8px;
+}
+
+td.default>.f-add {
+	margin-bottom: 12px;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+#sexCd1, #sexCd2 {
+	margin-right: 4px;
+}
+
+#sexCd2 {
+	margin-left: 12px;
+}
+
+#useFcltCd {
+	padding: 4px 8px;
+	border-radius: 4px;
+}
+
+td.no-over>.f-add {
+	display: block;
+	width: calc(100% - 40px);
+	border-radius: 8px;
+	background: #F2F3F3;
+	padding: 12px 18px 8px 18px;
+	top: 0;
+	left: 0;
+}
+
+/* 저장 버튼*/
+#saveBtn {
+	width: 100%;
+	padding: 16px 0;
+	background-color: #11E173;
+	border: none;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	z-index: 100;
+}
+
+/* 태블릿 반응형 */
+@media all and (min-width: 768px) {
+	body {
+		padding: 40px 40px 100px 40px;
+	}
+	.logo-box {
+		width: 200px;
+	}
+	.main-table td {
+		margin-top: 16px;
+	}
+	td.default {
+		padding: 18px 20px;
+	}
+	.main-table input, .main-table textarea {
+		padding: 60px 18px 12px 18px;
+	}
+	.main-table td>.f-add {
+		top: 18px;
+		left: 20px;
+	}
+	td.default>.f-add {
+		top: 0;
+		left: 0;
+	}
+	td.no-over>.f-add {
+		top: 0;
+		left: 0;
+	}
+}

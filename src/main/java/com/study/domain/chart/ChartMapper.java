@@ -7,49 +7,21 @@ import java.util.List;
 @Mapper
 public interface ChartMapper {
 
-    /**
-     * 게시글 저장
-     * @param params - 게시글 정보
+	/**
+     * 시설별 사용자 사용 횟수 조회
+     * @return 사용 횟수 정보 조회
      */
-    int attdInfoSave(ChartRequest params);
-
-    /**
-     * 게시글 상세정보 조회
-     * @param attdSn - PK
-     * @return 게시글 상세정보
-     */
-    ChartResponse findByAttdSn(Long attdSn);
-
+    List<ChartResponse> getListByUseFlctCd();
 
     /**
-     * 전에 작성한 출석체크 내용 조회
-     * @param id
-     * @return 전에 작성한 출석체크 내용
+     * 사용자별 통계 화면 그리드 컬럼 조회(그리드에서 보여줄 컬럼 목록 조회, 시설유형)
+     * @return 컬럼명 목록
      */
-    ChartResponse findByUserId(String id);
+    List<UseFcltVO> getUseFcltColList();
 
     /**
-     * 게시글 수정
-     * @param params - 게시글 정보
+     * 사용자별 사용시설 통계 목록 조회(view 테이블에서 그대로 조회함)
+     * @return 사용자별 사용시설 통계 목록
      */
-    void updateAttdInfo(ChartRequest params);
-
-    /**
-     * 게시글 삭제
-     * @param id - PK
-     */
-    void deleteByAttdSn(Long id);
-
-    /**
-     * 게시글 리스트 조회
-     * @return 게시글 리스트
-     */
-    List<ChartResponse> findAll();
-
-    /**
-     * 게시글 수 카운팅
-     * @return 게시글 수
-     */
-    int count();
-
+    List<UseFcltVO> getUseFcltDataList(UseFcltVO params);
 }

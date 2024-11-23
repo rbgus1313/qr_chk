@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+    <th:block layout:fragment="title">
+        <title>리스트 페이지</title>
+    </th:block>
+
+    <th:block layout:fragment="content">
+        <div class="content-title d-flex justify-s align-c">
+        	<p class="f-title-sm f-b">시설별 사용 통계</p>
+            <p class="path f-add f-dark80 tab-none">
+            	<span class="f-b">현재 위치 :</span>
+            	<span>통계</span>
+            	<span>시설별 사용 통계</span>
+            	<span>목록</span>
+            </p>
+        </div>
+
+        <div class="content">
+            <section>
+                <!--/* 검색 */-->
+                <div class="search_box d-flex align-c bg-dark5">
+                	<span class="search-title f-b tab-none">검색</span>
+                    <form id="searchForm" onsubmit="return false;" autocomplete="off">
+                        <div class="sch_group d-flex">
+                        	<label>검색년월</label>
+                            <select title="년">
+                                <option value="">2020년</option>
+                                <option value="">2021년</option>
+                                <option value="">2022년</option>
+                                <option value="">2023년</option>
+                                <option value="">2024년</option>
+                            </select>
+							<select title="월">
+                                <option value="">전체</option>
+                                <option value="">1월</option>
+                                <option value="">2월</option>
+                                <option value="">3월</option>
+                                <option value="">4월</option>
+                                <option value="">5월</option>
+                                <option value="">6월</option>
+                                <option value="">7월</option>
+                                <option value="">8월</option>
+                                <option value="">9월</option>
+                                <option value="">10월</option>
+                                <option value="">11월</option>
+                                <option value="">12월</option>
+                            </select>
+							<button type="button" class="bt_search" onclick="javascript: alert('준비 중입니다.');"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div>
+					<div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+                	<br><br>
+                	<div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+                </div>
+
+                <!--/* 리스트 */-->
+
+                <!--/* 버튼 */-->
+                <p class="btn_set tr">
+                    <!-- <a th:href="@{/post/write.do}" class="btns btn_st3 btn_mid">글쓰기</a> -->
+                </p>
+            </section>
+        </div> <!--/* .content */-->
+	</th:block>
+
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+        	$(document).ready(function(){
+        		$('.has_sub').find('a').attr('class', 'off');
+
+        		$("#staticsMenu").attr('class','on');
+        		$("#staticsMenu1").attr('class','on');
+        	})
+
+        	window.onload = function() {
+				var data1 = [[${data}]];
+				var chart1 = new CanvasJS.Chart("chartContainer1", {
+						theme: "light2", // "light1", "light2", "dark1", "dark2"
+						exportEnabled: true,
+						animationEnabled: true,
+						title: { text: "2024년 동구동락 시설 이용자 통계" },
+						data: [{ type: "pie",
+								 startAngle: 25,
+								 toolTipContent: "<b>{label}</b>: {y}%",
+								 showInLegend: "true",
+								 legendText: "{label}",
+								 indexLabelFontSize: 16,
+								 indexLabel: "{label} - {y}%",
+								 dataPoints: []
+							  }]
+					});
+				chart1.options.data[0].dataPoints = data1;
+				chart1.render();
+
+				var data2 = [[${data}]];
+				var chart2 = new CanvasJS.Chart("chartContainer2", {
+						theme: "light1", // "light1", "light2", "dark1", "dark2"
+						animationEnabled: true, // change to true
+						title: { text: "2024년 동구동락 시설 이용자 통계" },
+						data: [{ type: "column",
+
+								 dataPoints: []
+							  }]
+					});
+				chart2.options.data[0].dataPoints = data2;
+				chart2.render();
+			}
+        /*]]>*/
+        </script>
+    </th:block>
+</html>
