@@ -59,15 +59,15 @@ input::placeholder {
 /* 색상 */
 
 .f-dark {
-	color: #160E07;
+	color: #04170D;
 }
 
 .f-dark80 {
-	color: #453E39;
+	color: #36453D;
 }
 
 .f-dark50 {
-	color: #8A8682;
+	color: #818A85;
 }
 .f-white {
 	color: white;

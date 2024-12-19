@@ -26,15 +26,15 @@
     <th:block layout:fragment="add-css"></th:block>
 </head>
     <th:block layout:fragment="title">
-        <title>이용자 등록</title>
+        <title>글작성 페이지</title>
     </th:block>
 
     <th:block layout:fragment="content">
-        <div class="page_tits d-flex-c align-c">
-	    	<div class="logo-box t-c">
+        <div class="page_tits">
+	    	<div class="logo-box">
 		    	<img class="client-logo" src="/images/client_logo.svg" alt="동구동락 로고" />
     		</div>
-        	<p class="main-title f-title-sm f-b t-c">이용자 정보 저장</p>
+        	<p class="main-title f-title f-b">참석자정보 저장</p>
         </div>
 
         <div class="content">
@@ -52,7 +52,7 @@
 
                         <tbody>
                             <tr>
-                                <!-- <th scope="row">성별</th> -->
+                                <th scope="row">성별</th>
                                 <td class="default bg-dark5 d-flex-c">
                                 	<span class="f-add f-dark80">성별</span>
                                 	<div class="d-flex">
@@ -62,34 +62,34 @@
                                 </td>
                             </tr>
 							<tr>
-                                <!-- <th scope="row">등록일</th> -->
+                                <th scope="row">등록일</th>
                                 <td class=" d-flex-c">
                                 	<span class="f-add f-dark80">등록일</span>
                                 	<input type="text" id="regDttm" readonly />
                                 </td>
                             </tr>
                             <tr>
-                                <!-- <th>이름<span class="es">필수 입력</span></th> -->
+                                <th>이름<span class="es">필수 입력</span></th>
                                 <td class=" d-flex-c">
                                 	<span class="f-add f-dark80">이름</span>
                                 	<input type="text" id="userNm" name="userNm" maxlength="10" placeholder="이름을 입력해주세요" />
                                 </td>
                             </tr>
 							<tr>
-                                <!-- <th>전화번호 끝 4자리<span class="es">필수 입력</span></th> -->
+                                <th>전화번호 끝 4자리<span class="es">필수 입력</span></th>
                                 <td class=" d-flex-c">
                                 	<span class="f-add f-dark80">전화번호 끝 4자리</span>
                                 	<input type="text" id="telNo" name="telNo" maxlength="4" placeholder="전화번호 뒤 4자리를 입력해주세요"/>
                                 </td>
                             </tr>
                             <tr>
-                                <!-- <th>이용시설<span class="es">필수 입력</span></th> -->
+                                <th>이용시설<span class="es">필수 입력</span></th>
                                 <td class="default bg-dark5 d-flex-c">
                                 	<span class="f-add f-dark80">이용시설</span>
                                 	<select class="bg-dark20" id="useFcltCd" name="useFcltCd">
 										<option value="">선택</option>
-								        <option value="01">복사 및 스캔</option>
-								        <option value="02">동구식도락</option>
+								        <option value="01">복사/프린트</option>
+								        <option value="02">스캔</option>
 								        <option value="03">다락방(최대3시간)</option>
 								        <option value="04">다목적실(3명 이상 신청)</option>
 								        <option value="05">PC사용</option>
@@ -97,24 +97,26 @@
 								    </select>
                                 </td>
                             </tr>
-                            <!-- <tr>
-                                <th>사진 <span class="es">필수 입력</span></th>
+
+                            <tr>
+                                <th>내용 <span class="es">필수 입력</span></th>
                                 <td class="no-over d-flex-c">
                                 	<span class="f-add f-dark80">내용</span>
                                 	<textarea id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해주세요"></textarea>
                                 </td>
-                            </tr> -->
+                            </tr>
+
                             <tr>
                             	<th>사진 <span class="es">필수 입력</span></th>
                                 <td class="default bg-dark5 d-flex-c">
                                 	<span class="f-add f-dark80">사진</span>
-                            		<label for="camera" class="btn-upload d-flex justify-s align-c f-dark50">
+                            		<label for="camera">
+                            			<div class="btn-upload d-flex justify-s align-c f-dark50">
                             				<span>사진 촬영</span>
-                            				<svg style="width: 1.3rem; fill:#868584;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M149.1 64.8L138.7 96 64 96C28.7 96 0 124.7 0 160L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64l-74.7 0L362.9 64.8C356.4 45.2 338.1 32 317.4 32L194.6 32c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
-
+                            				<svg style="width: 1.3rem; fill:#818A85;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M149.1 64.8L138.7 96 64 96C28.7 96 0 124.7 0 160L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64l-74.7 0L362.9 64.8C356.4 45.2 338.1 32 317.4 32L194.6 32c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
+                            			</div>
 									</label>
                             		<input style="display: none;" type="file" name="camera" id="camera" accept="image/*" capture="camera">
-
                             		<img name="frame" id="frame">
                             	</td>
                             </tr>
@@ -129,18 +131,11 @@
                             	</td>
                             </tr>
                             <tr>
-                            	<!-- <th>주소</th> -->
+                            	<th>주소</th>
                                 <td class="d-flex-c">
                                 	<span class="f-add f-dark80">주소</span>
                             		<input type="text" id="phtoAddr" name="phtoAddr" readonly placeholder="촬영 시 자동으로 주소가 작성됩니다."/>
                             	</td>
-                            </tr>
-                            <tr>
-                            	<!-- <th>요청사항</th> -->
-                                <td class="no-over d-flex-c">
-                                	<span class="f-add f-dark80">기타</span>
-                                	<textarea id="content" name="content" cols="50" rows="10" placeholder="시설 이용관련 자유로운 의견 주세요. (필수항목X)"></textarea>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -151,7 +146,7 @@
             </section>
         </div> <!--/* .content */-->
     </th:block>
-	<button class="f-body f-b f-dark bg-primary" type="button" id="saveBtn" onclick="saveData();" >저장</button>
+	<button class="f-body f-b f-dark" type="button" id="saveBtn" onclick="saveData();" >저장</button>
     <th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
@@ -178,8 +173,6 @@
                     	frame.height = this.height * 0.1;
                     } */
                 });
-
-                $("#useFcltCd").val([[ ${fcltCd} ]]).prop("selected", true);
             }
 
             function success(position) {
@@ -277,19 +270,14 @@
             		document.getElementById('userId').value = regUserId;
             	}
                 const form = document.getElementById('saveForm');
-                const fields = [form.userNm, form.telNo, form.useFcltCd];
+                const fields = [form.userNm, form.content];
                 const deviceTypeNm = getOsType();
 
                 document.getElementById('deviceTypeNm').value = deviceTypeNm;
-                const fieldNames = ['이름', '전화번호', '이용시설'];
+                const fieldNames = ['이름', '내용'];
 
                 for (let i = 0, len = fields.length; i < len; i++) {
                     isValid(fields[i], fieldNames[i]);
-                }
-
-                //선택된 이용시설이 동구식도락(02)일 시 사진 유무 체크
-                if($("#useFcltCd").val()=='02') {
-                	isValid(form.camera, '사진');
                 }
 
                 document.getElementById('saveBtn').disabled = true;

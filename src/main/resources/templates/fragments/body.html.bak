@@ -4,9 +4,7 @@
     <div id="adm_wrap">
         <header>
             <div class="head d-flex justify-s align-c">
-                <a class="logo-box" href="/post/list.do">
-                	<img class="client-logo" src="/images/client_logo.svg" alt="동구동락 로고" />
-                </a>
+                <p class="f-b f-title-sm">동구동락 프로젝트</p>
                 <div class="top_menu d-flex align-c f-add">
                     <div class="login_user">
                     	<p><span class="f-b"><i class="far fa-user-circle"></i> 관리자 </span>님 반갑습니다.</p>
@@ -23,46 +21,38 @@
             </div>
         </header>
 
-		<div class="body-container d-flex">
-			<div id="menu" class="bg-dark80">
-				<nav class="f-b">
+        <div id="container">
+            <div class="menu_toggle"><span></span></div>
+            <!--/* 좌측 영역 */-->
+            <div class="lcontent">
+                <!--/* 메뉴 */-->
+                <nav>
                     <ul>
-                        <li class="has_sub"><a id="boardMenu" href="javascript: void(0);"><span>게시판 관리</span></a>
+                        <li class="has_sub"><a id="boardMenu" href="javascript: void(0);"><span class="f-b">게시판 관리</span></a>
                             <ul class="sub-cat">
-                                <li><a id="boardMenu1" href="/post/list.do">이용자 목록</a></li>
+                                <li><a id="boardMenu1" href="/post/list.do">참여자 목록</a></li>
                             </ul>
                         </li>
-                        <li class="has_sub"><a id="staticsMenu" href="javascript: void(0);" class="off"><span>통계</span></a>
+                        <li class="has_sub"><a id="staticsMenu" href="javascript: void(0);" class="off"><span class="f-b">통계</span></a>
                             <ul class="sub-cat">
-                                <li><a id="staticsMenu1" href="/chart/useFcltView.do" class="off">시설별 이용 통계</a></li>
-                                <li><a id="staticsMenu2" href="/chart/userStaticsView.do" class="off">이용자별 이용 통계</a></li>
-                            </ul>
-                        </li>
-                        <li class="has_sub"><a id="staticsMenu" href="javascript: void(0);" class="off"><span>계정</span></a>
-                            <ul class="sub-cat">
-                                <li><a id="staticsMenu1" href="/adm/admInfo.do" class="off">계정 정보 변경</a></li>
-                            </ul>
-                        </li>
-                        <li class="has_sub"><a id="staticsMenu" href="javascript: void(0);" class="off"><span>QR생성</span></a>
-                            <ul class="sub-cat">
-                                <li><a id="staticsMenu1" href="/qr/createQr.do" class="off">QR생성</a></li>
+                                <li><a id="staticsMenu1" href="/chart/useFcltView.do" class="off">시설별 사용 통계</a></li>
+                                <li><a id="staticsMenu2" href="/chart/userStaticsView.do" class="off">사용자별 사용 통계</a></li>
                             </ul>
                         </li>
                     </ul>
                 </nav>
-                <div id="menu-btn"></div>
-			</div>
+            </div>
 
-			<div class="main-content">
+            <!--/* 우측 영역 */-->
+            <div class="rcontent">
+
                 <!--/* 페이지별 컨텐츠 */-->
                 <th:block layout:fragment="content"></th:block>
-			</div>
-		</div><!--/* // #container */-->
+
+            </div>
+        </div> <!--/* // #container */-->
         <footer>Copyright(c).All rights reserved.</footer>
-	</div>
-	<!-- Sheet JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    </div>
 
     <script th:src="@{/js/function.js}"></script>
     <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
@@ -70,8 +60,6 @@
     <script src="https://kit.fontawesome.com/79613ae794.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"> </script>
-
-    <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 
     <th:block layout:fragment="script"></th:block>
 </body>

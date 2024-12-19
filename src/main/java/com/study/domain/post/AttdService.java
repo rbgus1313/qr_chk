@@ -9,6 +9,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.study.common.util.file.FileService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,14 +21,19 @@ public class AttdService {
 
     private final AttdMapper attdMapper;
 
+    private final FileService fileService;
+
     /**
      * 게시글 저장
      * @param params - 게시글 정보
      * @return Generated PK
      */
     @Transactional
-    public Map<String, Object> attdInfoSave(final AttdRequest params) {
+    public Map<String, Object> attdInfoSave(final AttdVO params, MultipartFile[] files) {
     	Map<String, Object> resultMap = new HashMap<String, Object>();
+    	//파일 저장 후 파일그룹순번 세팅
+    	params.setFileGrpSn((int)(fileService.saveFiles(files)).get("fileGrpSn"));
+    	//작성 게시글 저장
     	if(ObjectUtils.isEmpty(params.getUserId())) {
     		params.setUserId(UUID.randomUUID().toString());
     	}
@@ -39,7 +47,7 @@ public class AttdService {
      * @param id - PK
      * @return 게시글 상세정보
      */
-    public AttdResponse findByAttdSn(final long AttdSn) {
+    public AttdVO findByAttdSn(final long AttdSn) {
         return attdMapper.findByAttdSn(AttdSn);
     }
 
@@ -48,7 +56,7 @@ public class AttdService {
      * @param id
      * @return 전에 작성한 출석체크 내용
      */
-    public AttdResponse findByUserId(final String userId) {
+    public AttdVO findByUserId(final String userId) {
         return attdMapper.findByUserId(userId);
     }
 
@@ -58,7 +66,7 @@ public class AttdService {
      * @return PK
      */
     @Transactional
-    public Long updateAttdInfo(final AttdRequest params) {
+    public Long updateAttdInfo(final AttdVO params) {
     	attdMapper.updateAttdInfo(params);
         return params.getAttdSn();
     }
@@ -77,7 +85,18 @@ public class AttdService {
      * 게시글 리스트 조회
      * @return 게시글 리스트
      */
-    public List<AttdResponse> findAllPost(AttdRequest param) {
+    public List<AttdVO> findAllPost(AttdVO param) {
+    	int curPage = param.getCurPage();
+    	param.setStartRow((curPage - 1) * 10);
+    	param.setEndRow(10);
         return attdMapper.findAll(param);
+    }
+
+    /**
+     * 게시글 수 카운팅
+     * @return 게시글 수
+     */
+    public int findAllCnt(AttdVO param) {
+    	return attdMapper.findAllCnt(param);
     }
 }

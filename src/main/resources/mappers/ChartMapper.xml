@@ -3,27 +3,26 @@
 
 <mapper namespace="com.study.domain.chart.ChartMapper">
     <!-- 게시글 리스트 조회 -->
-    <select id="getListByUseFlctCd" resultType="com.study.domain.chart.ChartResponse">
+    <select id="getListByUseFlctCd" parameterType="com.study.domain.chart.ChartVO" resultType="com.study.domain.chart.ChartVO">
 		 SELECT A.LABEL
 			  , A.Y AS CNT
 			  , ROUND(A.Y / (SELECT COUNT(1) FROM TB_ATTD_INFO) * 100) AS Y
 		   FROM (SELECT NVL((SELECT COM_CD_NM FROM TB_COM_CD TCC WHERE COM_GRP_CD = 'USE_FCLT_CD' AND COM_CD = USE_FCLT_CD), '미분류') AS LABEL
 					  , COUNT(1) AS Y
 				   FROM TB_ATTD_INFO
-				  <!-- WHERE REG_DT BETWEEN #{bgnDt} AND #{endDt} -->
-		 		  WHERE SUBSTR(REG_DT, 1, 4) = TO_CHAR(NOW(), 'YYYY')
+				  WHERE SUBSTR(REG_DT, 1, 6) BETWEEN #{bgnYyMm} AND #{endYyMm}
 				  GROUP BY USE_FCLT_CD) A
     </select>
 
     <!-- 사용자별 통계 화면 그리드 컬럼 조회(시설유형) -->
-    <select id="getUseFcltColList" resultType="com.study.domain.chart.UseFcltVO">
+    <select id="getUseFcltColList" resultType="com.study.domain.chart.ChartVO">
 		 SELECT COM_CD_NM AS COL_NM
 		   FROM TB_COM_CD
 		  WHERE COM_GRP_CD = 'USE_FCLT_CD'
     </select>
 
     <!-- 사용자별 시설사용 통계 목록 조회 -->
-    <select id="getUseFcltDataList" parameterType="com.study.domain.chart.UseFcltVO" resultType="com.study.domain.chart.UseFcltVO">
+    <select id="getUseFcltDataList" parameterType="com.study.domain.chart.ChartVO" resultType="com.study.domain.chart.ChartVO">
 		SELECT TEL_NO
 			 , USER_NM
 			 , USE_FCLT_CD_01
@@ -37,8 +36,25 @@
 		  WHERE 1=1
 			<if test='slctTypeCd== "00"'>
 	   			AND (USER_NM LIKE CONCAT('%', #{srchTxt}, '%') OR
-	   				 CONTENT LIKE CONCAT('%', #{srchTxt}, '%') OR
-	   				 (SELECT COM_CD_NM FROM TB_COM_CD TCC WHERE COM_GRP_CD = 'USE_FCLT_CD' AND COM_CD = USE_FCLT_CD) LIKE CONCAT('%', #{srchTxt}, '%'))
+	   				 TEL_NO LIKE CONCAT('%', #{srchTxt}, '%'))
+			</if>
+	        <if test='slctTypeCd== "01"'>
+	   			AND USER_NM LIKE CONCAT('%', #{srchTxt}, '%')
+			</if>
+	         	<if test='slctTypeCd== "02"'>
+	   			AND TEL_NO LIKE CONCAT('%', #{srchTxt}, '%')
+			</if>
+		  LIMIT #{startRow}, #{endRow}
+    </select>
+
+	<!-- 사용자별 시설사용 통계 목록 총건수 조회 -->
+    <select id="getUseFcltDataCnt" parameterType="com.study.domain.chart.ChartVO" resultType="int">
+		SELECT COUNT(1)
+		  FROM VT_FCLT_USER_INFO
+		  WHERE 1=1
+			<if test='slctTypeCd== "00"'>
+	   			AND (USER_NM LIKE CONCAT('%', #{srchTxt}, '%') OR
+	   				 TEL_NO LIKE CONCAT('%', #{srchTxt}, '%'))
 			</if>
 	        <if test='slctTypeCd== "01"'>
 	   			AND USER_NM LIKE CONCAT('%', #{srchTxt}, '%')
@@ -47,5 +63,4 @@
 	   			AND TEL_NO LIKE CONCAT('%', #{srchTxt}, '%')
 			</if>
     </select>
-
 </mapper>

@@ -2,6 +2,14 @@ $(document).ready(function() {
 	//태블릿 반응형
 	var tbMql = window.matchMedia("screen and (max-width: 1023px)");
 
+	if (tbMql.matches) {
+		$("#menu").addClass('off');
+	}
+	$("#menu-btn").click(function(){
+		$("#menu").toggleClass("off");
+		$(window).trigger('resize');
+	});
+
 	// gnb
 	$("nav > ul > li.has_sub > a").click(function(e) {
 		if ($(this).parent().has("> ul")) {
@@ -18,17 +26,43 @@ $(document).ready(function() {
 		}
 	});
 
-	// menu_toggle
 
-	if (tbMql.matches) {
-		$('#container .menu_toggle').addClass('active');
-		$('body').addClass('snb_none');
+	// sheet js 엑셀파일 다운로드
+	const excelDownload = document.querySelector('#printBtn');
+
+	function exportExcel(){
+	  var wb = XLSX.utils.book_new();
+	  var newWorksheet = excelHandler.getWorksheet();
+	  XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+	  var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+	  saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), excelHandler.getExcelFileName());
 	}
-	$(".menu_toggle").click(function() {
-		$('#container .menu_toggle').toggleClass('active');
-		$('body').toggleClass('snb_none');
-		$(window).trigger('resize');
-	});
+
+	excelDownload.addEventListener('click', exportExcel);
+
+	var excelHandler = {
+	    getExcelFileName : function(){
+	        return '참여자 목록.xlsx';	//파일명
+	    },
+	    getSheetName : function(){
+	        return '참여자 목록';//시트명
+	    },
+	    getExcelData : function(){
+	        return document.getElementById('listData');
+	    },
+	    getWorksheet : function(){
+	        return XLSX.utils.table_to_sheet(this.getExcelData());
+	    }
+	}
+
+	function s2ab(s) {
+	  var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
+	  var view = new Uint8Array(buf);  //create uint8array as viewer
+	  for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+	  return buf;
+	}
+
+
 
 	// cm_list
 	$(".cm_list > div > a").click(function() {

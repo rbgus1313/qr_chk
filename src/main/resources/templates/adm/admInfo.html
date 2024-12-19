@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+    <th:block layout:fragment="title">
+        <title>동구동락 | 이용자 목록</title>
+    </th:block>
+
+    <th:block layout:fragment="content">
+        <div class="content-title d-flex justify-s align-c">
+        	<p class="f-title-sm f-b">계정 정보 변경</p>
+            <p class="path f-add f-dark80 tab-none">
+            	<span class="f-b">현재 위치 :</span>
+            	<span>계정</span>
+            	<span>계정 정보 변경</span>
+            </p>
+        </div>
+
+        <div id="content" class="content">
+            <section>
+            	<div class="info-tab bg-dark5 t-l">
+            		<table>
+		    	        <colgroup>
+							<col style="width:20%;"/>
+							<col style="width:80%;"/>
+            			</colgroup>
+						<tbody>
+            				<tr>
+            					<th class="f-b">이름</th>
+            					<td><input type="text" id="admNm" name="admNm" maxlength="10" /></td>
+            				</tr>
+            				<tr>
+            					<th class="f-b">아이디</th>
+            					<td><input type="text" id="admId" name="admId" maxlength="10" /></td>
+            				</tr>
+            				<tr>
+            					<th class="f-b">비밀번호</th>
+            					<td><input type="password" id="admPw" name="admPw" maxlength="10" /></td>
+            				</tr>
+            				<tr>
+            					<th class="f-b">비밀번호 확인</th>
+            					<td><input type="password" id="admPw" name="admPw" maxlength="10" /></td>
+            				</tr>
+            			</tbody>
+            		</table>
+            	</div>
+            	<div class="d-flex justify-c w-100">
+            		<button type="button" class="on f-b info-btn bg-dark10">수정하기</button>
+            	</div>
+            </section>
+        </div> <!--/* .content */-->
+    </th:block>
+</html>

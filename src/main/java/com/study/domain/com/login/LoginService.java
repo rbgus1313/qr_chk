@@ -13,7 +13,7 @@ public class LoginService {
      * 관리 사용자 정보 조회
      * @return 관리 사용자 정보
      */
-    public LoginResponse getUserInfo(LoginRequest param) {
+    public LoginVO getUserInfo(LoginVO param) {
         return loginMapper.getUserInfo(param);
     }
 }

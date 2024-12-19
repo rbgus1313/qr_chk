@@ -11,14 +11,14 @@ public interface AttdMapper {
      * 게시글 저장
      * @param params - 게시글 정보
      */
-    int attdInfoSave(AttdRequest params);
+    int attdInfoSave(AttdVO params);
 
     /**
      * 게시글 상세정보 조회
      * @param attdSn - PK
      * @return 게시글 상세정보
      */
-    AttdResponse findByAttdSn(Long attdSn);
+    AttdVO findByAttdSn(Long attdSn);
 
 
     /**
@@ -26,13 +26,13 @@ public interface AttdMapper {
      * @param id
      * @return 전에 작성한 출석체크 내용
      */
-    AttdResponse findByUserId(String id);
+    AttdVO findByUserId(String id);
 
     /**
      * 게시글 수정
      * @param params - 게시글 정보
      */
-    void updateAttdInfo(AttdRequest params);
+    void updateAttdInfo(AttdVO params);
 
     /**
      * 게시글 삭제
@@ -44,12 +44,12 @@ public interface AttdMapper {
      * 게시글 리스트 조회
      * @return 게시글 리스트
      */
-    List<AttdResponse> findAll(AttdRequest param);
+    List<AttdVO> findAll(AttdVO param);
 
     /**
      * 게시글 수 카운팅
      * @return 게시글 수
      */
-    int count();
+    int findAllCnt(AttdVO param);
 
 }

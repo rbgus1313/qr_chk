@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
     <th:block layout:fragment="title">
-        <title>리스트 페이지</title>
+        <title>동구동락 | 이용자 목록</title>
     </th:block>
 
     <th:block layout:fragment="content">
         <div class="content-title d-flex justify-s align-c">
-        	<p class="f-title-sm f-b">참여자 목록</p>
+        	<p class="f-title-sm f-b">이용자 목록</p>
             <p class="path f-add f-dark80 tab-none">
             	<span class="f-b">현재 위치 :</span>
             	<span>게시판 관리</span>
-            	<span>참여자 목록</span>
+            	<span>이용자 목록</span>
             	<span>목록</span>
             </p>
         </div>
@@ -22,37 +22,44 @@
                 	<span class="search-title f-b tab-none">검색</span>
                     <form id="searchForm" name="searchForm" onsubmit="return false">
                         <div class="sch_group d-flex">
-                            <select id="slctTypeCd" name="slctTypeCd" title="검색 유형 선택">
+                            <select id="slctTypeCd" name="slctTypeCd" title="검색 유형 선택" th:field="${param.slctTypeCd}" th:value="${param.slctTypeCd}">
                                 <option value="00">전체 검색</option>
                                 <option value="01">사용자명</option>
-                                <option value="02">내용</option>
+                                <option value="02">휴대폰 뒷번호</option>
                                 <option value="03">이용시설</option>
                             </select>
-                            <input id="srchTxt" name="srchTxt" type="text" placeholder="키워드를 입력해 주세요." title="키워드 입력"/>
-                            <button type="button" class="bt_search bg-dark50 f-white f-b" onclick="doSearch();"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+                            <input id="srchTxt" class="flex-g" name="srchTxt" type="text" placeholder="키워드를 입력해 주세요." title="키워드 입력" th:value="${param.srchTxt}" onKeyPress="if (event.keyCode==13) { form.submit(); }" />
+                            <button type="button" class="bt_search bg-dark80 f-white f-b" onclick="doSearch(1);">
+								<svg style="fill:white;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+								<span class="skip_info">검색</span>
+							</button>
                         </div>
                     </form>
                 </div>
-
+				<!-- 엑셀 다운로드 버튼 -->
+				<div class="d-flex justify-e">
+					<button type="button" id="printBtn" >엑셀파일 다운로드</button>
+				</div>
                 <!--/* 리스트 */-->
                 <div class="tb-box">
-	                <table class="list-tb t-c">
+	                <table class="list-tb t-c" id="listData">
     	                <colgroup>
-        	                <col style="width:5%;"/>
-            	            <col class="tab-none" style="width:7.5%;"/>
+            	            <col style="width:7.5%;"/>
+                	        <col style="width:10%; min-width: 5rem;"/>
                 	        <col style="width:10%;"/>
                     	    <col style="width:30%;"/>
                         	<col style="width:10%;"/>
 	                        <col style="width:15%;"/>
     	                    <col style="width:10%;"/>
-        	                <col style="width:15%;"/>
+        	                <col style="width:20%; min-width:7rem;"/>
             	        </colgroup>
                 	    <thead class="f-add f-dark80 bg-dark5">
                     	    <tr>
-                        	    <th scope="col"><input type="checkbox"/></th>
-	                            <th class="tab-none" scope="col">번호</th>
-    	                        <th scope="col">사용자명</th>
-        	                    <th scope="col">내용</th>
+                        	    <!-- <th scope="col"><input type="checkbox"/></th> -->
+	                            <th scope="col">번호</th>
+    	                        <th scope="col">이름</th>
+    	                        <th scope="col">휴대폰 뒷번호</th>
+        	                    <th scope="col">기타</th>
             	                <th scope="col">성별</th>
                 	            <th scope="col">이용시설</th>
                     	        <th scope="col">단말기ID</th>
@@ -60,20 +67,20 @@
 	                        </tr>
     	                </thead>
         	            <tbody>
-            	            <tr th:if="${not #lists.isEmpty( list )}" th:each="row, status : ${list}">
-                	            <td><input type="checkbox"/></td>
-                    	        <td class="tab-none" th:text="${row.attdSn}"></td>
-                        	    <!-- <td ><a th:href="@{/post/view.do( id=${row.attdSn} )}" th:text="${row.userNm}"></a></td> -->
-                        	    <td><a th:onclick="|onClickCell(${row.attdSn})|" th:text="${row.userNm}"></a></td>
+            	            <tr style="cursor:pointer;" th:onclick="|onClickCell(${row.attdSn})|" th:if="${not #lists.isEmpty( list )}" th:each="row, status : ${list}">
+                	            <!-- <td><input type="checkbox"/></td> -->
+                    	        <td th:text="${row.attdSn}"></td>
+                        	    <td><a th:text="${row.userNm}"></a></td>
+                        	    <td th:text="${row.telNo}"></td>
                             	<td class="t-l table-detail" th:text="${row.content}"></td>
 	                            <td th:text="${row.sexCd == 'M' ? '남성' : '여성'}"></td>
     	                        <td th:text="${row.useFcltNm}"></td>
         	                	<td th:text="${row.deviceTypeNm}"></td>
-            	        		<td th:text="${#temporals.format( row.regDttm, 'yyyy-MM-dd HH:mm' )}"></td>
+            	        		<td class="list-date" th:text="${#temporals.format( row.regDttm, 'yyyy-MM-dd HH:mm' )}"></td>
                 		    </tr>
 
     	        	        <tr th:unless="${not #lists.isEmpty( list )}">
-        		        		<td colspan="5">
+        		        		<td colspan="8">
             	        			<div class="no_data_msg">검색된 결과가 없습니다.</div>
                 	    		</td>
                     		</tr>
@@ -82,9 +89,9 @@
 				</div>
                 <!--/* 페이지네이션 */-->
                 <div class="paging">
-                    <a href="#" class="page_bt first">첫 페이지</a><a href="#" class="page_bt prev">이전 페이지 그룹</a>
-                    <p><span class="on">1</span><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">9</a><a href="#">10</a></p>
-                    <a href="#" class="page_bt next">다음 페이지 그룹</a><a href="#" class="page_bt last">마지막 페이지</a>
+                    <a style="cursor:pointer;" th:onclick="|doSearch('firstPage')|" class="page_bt first">첫 페이지</a><a style="cursor:pointer;" th:onclick="|doSearch('prev')|" class="page_bt prev">이전 페이지 그룹</a>
+                    <p><span th:each="i : ${#numbers.sequence(1, pageCnt)}"><a th:name="'page_' + ${i}" th:id="'page_' + ${i}" style="cursor:pointer;" th:onclick="|doSearch(${i})|" th:text="${i}"></a></span></p>
+                    <a style="cursor:pointer;" th:onclick="|doSearch('next')|" class="page_bt next">다음 페이지 그룹</a><a style="cursor:pointer;" th:onclick="|doSearch('endPage')|" class="page_bt last">마지막 페이지</a>
                 </div>
 
                 <!--/* 버튼 */-->
@@ -97,22 +104,40 @@
     <th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
+        	var curPage = 1;
+        	var maxPage = 1;
         	$(document).ready(function(){
         		$('.has_sub').find('a').attr('class', 'off');
 
         		$("#boardMenu").attr('class','on');
         		$("#boardMenu1").attr('class','on');
+
+        		$("#page_" + curPage).attr('class','on');
+
+        		maxPage = [[ ${pageCnt} ]];
         	});
 
           	//검색버튼 이벤트
-            function doSearch() {
+            function doSearch(clickPage) {
+          		if(clickPage == 'prev') {
+          			curPage = curPage < 2 ? 1 : curPage - 1;
+          		} else if(clickPage == 'next') {
+          			curPage = curPage == maxPage ? maxPage : curPage + 1;
+          		} else if(clickPage == 'firstPage') {
+          			curPage = 1;
+          		} else if(clickPage == 'endPage') {
+          			curPage = maxPage;
+          		} else {
+          			curPage = clickPage;
+          		}
             	const form = document.getElementById('searchForm');
             	var slctTypeCd = form.slctTypeCd.value;
             	var srchTxt = form.srchTxt.value;
 
                 var param = {
                 		slctTypeCd: slctTypeCd,
-                		srchTxt: srchTxt
+                		srchTxt: srchTxt,
+                		curPage: curPage
                 };
                 $.ajax({
                     url: "/post/search.do",
@@ -121,6 +146,8 @@
                 })
                 .done(function (fragment) {
                 	$("#content").replaceWith(fragment);
+                	$("#page_" + curPage).attr('class','on');
+                	maxPage = [[ ${pageCnt} ]];
                 });
             }
 

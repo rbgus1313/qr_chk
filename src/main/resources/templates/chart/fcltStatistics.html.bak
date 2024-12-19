@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
     <th:block layout:fragment="title">
-        <title>동구동락 | 시설별 이용 통계</title>
+        <title>리스트 페이지</title>
     </th:block>
 
     <th:block layout:fragment="content">
         <div class="content-title d-flex justify-s align-c">
-        	<p class="f-title-sm f-b">시설별 이용 통계</p>
+        	<p class="f-title-sm f-b">시설별 사용 통계</p>
             <p class="path f-add f-dark80 tab-none">
             	<span class="f-b">현재 위치 :</span>
             	<span>통계</span>
-            	<span>시설별 이용 통계</span>
+            	<span>시설별 사용 통계</span>
             	<span>목록</span>
             </p>
         </div>
@@ -45,7 +45,7 @@
                                 <option value="11">11월</option>
                                 <option value="12">12월</option>
                             </select>
-							<button type="button" class="bt_search bg-dark80" onclick="doSearch();">
+							<button type="button" class="bt_search bg-dark50" onclick="doSearch();">
 								<svg style="width:0.8rem; fill:white;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
 								<span class="skip_info">검색</span>
 							</button>
@@ -91,16 +91,16 @@
 
         		CanvasJS.addColorSet('customColorSet1',
         			     [//colorSet Array
-        			     '#FFC851',
-        			     '#ff8889',
-        			     '#F8974A',
-        			     '#846092',
-        			     '#a58d65',
-        			     '#a3bd54',
-        			     '#00d1a4',
-        			     '#98b0a9',
-        			     '#ffc1b2',
-        			     '#a26953',
+        			     '#11e173',
+        			     '#0AD3F2',
+        			     '#0AF2C5',
+        			     '#0AF227',
+        			     '#0A89F2',
+        			     '#5AF2D5',
+        			     '#00a0ff',
+        			     '#98e262',
+        			     '#ff8400',
+        			     '#6882ff',
         			    ]);
 
 
@@ -111,7 +111,7 @@
 						theme: 'light2', // "light1", "light2", "dark1", "dark2"
 						exportEnabled: true,
 						animationEnabled: true,
-						title: { fontSize: 28 , margin:25 , fontFamily:"Pretendard" , fontColor: "#04170D", text: year + "년 " + month + " 동구동락 이용자 통계" },
+						title: { fontSize: 28 , margin:25 , fontFamily:"Pretendard" , fontColor: "#04170D", text: year + "년 " + month + " 동구동락 시설 이용자 통계" },
 						toolbar: { itemBackgroundColorOnHover: "#818A85" },
 						animationEnabled: true,
 						animationDuration: 800,
@@ -128,7 +128,6 @@
 				chart1.options.data[0].dataPoints = data1;
 				chart1.render();
 
-
 				var data2 = data;
 				var chart2 = new CanvasJS.Chart("chartContainer2", {
 						colorSet: 'customColorSet1',
@@ -137,7 +136,7 @@
 						animationEnabled: true,
 						animationDuration: 1200,
 						// title: { fontSize: 20 , fontFamily:"Pretendard" , fontColor: "#04170D", text: year + "년 " + month + " 동구동락 시설 이용자 통계" },
-						data: [{ type: "line",
+						data: [{ type: "column",
 
 								 dataPoints: []
 							  }]

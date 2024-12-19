@@ -19,7 +19,7 @@
     </sql>
 
     <!-- 사용자 정보 조회 -->
-    <select id="getUserInfo" parameterType="com.study.domain.com.login.LoginRequest" resultType="com.study.domain.com.login.LoginResponse">
+    <select id="getUserInfo" parameterType="com.study.domain.com.login.LoginVO" resultType="com.study.domain.com.login.LoginVO">
       SELECT <include refid="attdInfoColumns" />
         FROM TB_USER
 	   WHERE USER_ID = #{loginId}

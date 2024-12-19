@@ -1,9 +1,10 @@
 @charset "utf-8";
 
+
 body {
 	margin: 0 auto;
 	width: 100%;
-	padding: 50px 16px 80px 16px;
+	padding: 20px 16px 80px 16px;
 	box-sizing: border-box;
 }
 
@@ -18,14 +19,6 @@ input[type=text], input[type="password"], input[type="search"], input[type="emai
 	font-size: 1rem;
 }
 
-input[type=text]::placeholder, input[type="password"]::placeholder,
-	input[type="search"]::placeholder, input[type="email"]::placeholder,
-	input[type="url"]::placeholder, input[type="number"]::placeholder,
-	input[type="tel"]::placeholder, input[type="date"]::placeholder, select::placeholder,
-	textarea::placeholder {
-	color: #868584;
-}
-
 input[readonly], select[readonly], textarea[readonly], .readonly, input[disabled],
 	select[disabled], textarea[disabled], .disabled {
 	color: #818A85;
@@ -38,7 +31,11 @@ input[readonly]:focus, select[readonly]:focus, textarea[readonly]:focus,
 
 /* 로고, 타이틀 */
 .logo-box {
-	width: 60%;
+	width: 140px;
+}
+
+.logo-box img {
+	width: 100%;
 }
 
 .main-title {
@@ -47,7 +44,6 @@ input[readonly]:focus, select[readonly]:focus, textarea[readonly]:focus,
 
 .main-table {
 	width: 100%;
-	table-layout: fixed;
 }
 
 .main-table td {
@@ -109,6 +105,7 @@ td.no-over>.f-add {
 #saveBtn {
 	width: 100%;
 	padding: 16px 0;
+	background-color: #11E173;
 	border: none;
 	bottom: 0;
 	left: 0;

@@ -15,13 +15,15 @@
 		, CONTENT
 		, DEL_YN
 		, USE_FCLT_CD
+		, FILE_GRP_SN
+		, PHTO_ADDR
 		, REGR_IP
 		, REG_DTTM
     </sql>
 
 
     <!-- 게시글 저장 -->
-    <insert id="attdInfoSave" parameterType="com.study.domain.post.AttdRequest" useGeneratedKeys="true" keyProperty="attdSn">
+    <insert id="attdInfoSave" parameterType="com.study.domain.post.AttdVO" useGeneratedKeys="true" keyProperty="attdSn">
         INSERT INTO TB_ATTD_INFO (
             <include refid="attdInfoColumns" />
         ) VALUES (
@@ -35,20 +37,37 @@
             , #{content}
             , 'N'
             , #{useFcltCd}
+            , #{fileGrpSn}
+            , #{phtoAddr}
             , NULL
             , NOW()
         )
     </insert>
 
     <!-- 게시글 상세정보 조회 -->
-    <select id="findByAttdSn" parameterType="long" resultType="com.study.domain.post.AttdResponse">
-      SELECT <include refid="attdInfoColumns" />
-        FROM TB_ATTD_INFO
-	   WHERE ATTD_SN = #{value}
+    <select id="findByAttdSn" parameterType="long" resultType="com.study.domain.post.AttdVO">
+      SELECT A.ATTD_SN
+		  , A.USER_ID
+		  , A.REG_DT
+		  , A.USER_NM
+		  , A.TEL_NO
+		  , A.SEX_CD
+		  , A.DEVICE_TYPE_NM
+		  , A.CONTENT
+		  , A.DEL_YN
+		  , A.USE_FCLT_CD
+		  , A.FILE_GRP_SN
+		  , A.PHTO_ADDR
+		  , A.REGR_IP
+		  , A.REG_DTTM
+		  , B.FILE_NM AS IMG_FILE_NM
+	   FROM TB_ATTD_INFO A
+	   LEFT JOIN TB_COM_FILE B ON A.FILE_GRP_SN = B.FILE_GRP_SN AND B.FILE_SN = 1
+	  WHERE ATTD_SN = #{value}
     </select>
 
     <!-- 직전 출석체크 정보 조회 -->
-    <select id="findByUserId" parameterType="String" resultType="com.study.domain.post.AttdResponse">
+    <select id="findByUserId" parameterType="String" resultType="com.study.domain.post.AttdVO">
       SELECT <include refid="attdInfoColumns" />
         FROM TB_ATTD_INFO
 	   WHERE ATTD_SN = (SELECT MAX(ATTD_SN)
@@ -59,7 +78,7 @@
 
 
     <!-- 게시글 수정 -->
-    <update id="updateAttdInfo" parameterType="com.study.domain.post.AttdRequest">
+    <update id="updateAttdInfo" parameterType="com.study.domain.post.AttdVO">
         UPDATE TB_ATTD_INFO
            SET MOD_DT = NOW()
              , CONTENT = #{content}
@@ -75,9 +94,29 @@
          WHERE ATTD_SN = #{attdSn}
     </delete>
 
+	<!-- 게시글 총 개수 조회 -->
+    <select id="findAllCnt" parameterType="com.study.domain.post.AttdVO" resultType="int">
+        SELECT COUNT(1)
+        FROM TB_ATTD_INFO
+        WHERE DEL_YN = 'N'
+       	<if test='slctTypeCd== "00"'>
+   			AND (USER_NM LIKE CONCAT('%', #{srchTxt}, '%') OR
+   				 CONTENT LIKE CONCAT('%', #{srchTxt}, '%') OR
+   				 (SELECT COM_CD_NM FROM TB_COM_CD TCC WHERE COM_GRP_CD = 'USE_FCLT_CD' AND COM_CD = USE_FCLT_CD) LIKE CONCAT('%', #{srchTxt}, '%'))
+		</if>
+        <if test='slctTypeCd== "01"'>
+   			AND USER_NM LIKE CONCAT('%', #{srchTxt}, '%')
+		</if>
+         	<if test='slctTypeCd== "02"'>
+   			AND CONTENT LIKE CONCAT('%', #{srchTxt}, '%')
+		</if>
+		<if test='slctTypeCd== "03"'>
+   			AND (SELECT COM_CD_NM FROM TB_COM_CD TCC WHERE COM_GRP_CD = 'USE_FCLT_CD' AND COM_CD = USE_FCLT_CD) LIKE CONCAT('%', #{srchTxt}, '%')
+		</if>
+    </select>
 
     <!-- 게시글 리스트 조회 -->
-    <select id="findAll" parameterType="com.study.domain.post.AttdRequest" resultType="com.study.domain.post.AttdResponse">
+    <select id="findAll" parameterType="com.study.domain.post.AttdVO" resultType="com.study.domain.post.AttdVO">
         SELECT ATTD_SN
 			 , USER_ID
 			 , REG_DT
@@ -108,6 +147,7 @@
    			AND (SELECT COM_CD_NM FROM TB_COM_CD TCC WHERE COM_GRP_CD = 'USE_FCLT_CD' AND COM_CD = USE_FCLT_CD) LIKE CONCAT('%', #{srchTxt}, '%')
 		</if>
         ORDER BY ATTD_SN DESC
+        LIMIT #{startRow},#{endRow}
     </select>
 
 </mapper>

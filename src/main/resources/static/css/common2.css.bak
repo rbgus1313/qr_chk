@@ -16,10 +16,6 @@ ul, li {
 	list-style: none;
 }
 
-table {
-	word-break: keep-all;
-}
-
 a {
 	color: inherit;
 	text-decoration: none;
@@ -33,8 +29,9 @@ button {
 	border: none;
 }
 
+
 input:focus, textarea:focus {
-	box-shadow: 0px 0px 5px #FCDE7F;
+	box-shadow: 0px 0px 3px #87EFB8;
 }
 
 input[type=radio] {
@@ -73,13 +70,6 @@ input[type=radio] {
 	justify-content: space-between;
 }
 
-.justify-e {
-	-webkit-box-pack: end;
-	-moz-box-justify-content: flex-end;
-	-ms-flex-pack: end;
-	justify-content: flex-end;
-}
-
 .align-c {
 	-webkit-box-align: center;
 	-moz-align-items: center;
@@ -94,26 +84,22 @@ input[type=radio] {
 	align-items: stretch;
 }
 
-.flex-g {
-	-webkit-box-flex: 1;
-	-ms-flex: 1;
-	flex-grow: 1;
-}
-
-.w-100{
-	width:100%;
+.flex-g{
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex-grow: 1;
 }
 
 .bg-primary {
-	background-color: #FABE00;
+	background-color: #11E173;
 }
 
 .bg-primary50 {
-	background-color: #FCDE7F;
+	background-color: #87EFB8;
 }
 
 .bg-primary10 {
-	background-color: #FFF9E6;
+	background-color: #E8FCF1;
 }
 
 .bg-white {
@@ -121,27 +107,23 @@ input[type=radio] {
 }
 
 .bg-dark {
-	background-color: #0E0D0B;
+	background-color: #04170D;
 }
 
 .bg-dark80 {
-	background-color: #3E3D3C;
+	background-color: #36453D;
 }
 
 .bg-dark50 {
-	background-color: #868584;
+	background-color: #818A85;
 }
 
 .bg-dark20 {
-	background-color: #CFCFCE;
+	background-color: #CDD1CF;
 }
 
 .bg-dark5 {
-	background-color: #F3F3F3;
-}
-
-.client-logo {
-	width: 100%;
+	background-color: #F2F3F3;
 }
 
 /* 모바일 반응형 */

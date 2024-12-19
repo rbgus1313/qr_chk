@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.common.util.file.FileMapper">
+	<!-- 파일 그룹 시퀀스 가져오기 -->
+    <select id="getFileGrpSeq" resultType="int">
+        SELECT nextval(file_seq);
+    </select>
+
+    <!-- 파일 정보 저장 -->
+    <insert id="saveFileInfo" parameterType="com.study.common.util.file.FileVO" useGeneratedKeys="true" keyProperty="FileGrpSn">
+        INSERT INTO TB_COM_FILE (
+            FILE_GRP_SN
+		  , FILE_SN
+		  , FILE_FULL_PATH
+		  , FILE_NM
+		  , FILE_OGN_NM
+		  , REG_IP
+		  , REG_DTTM
+		  , REG_USER_NO
+        ) VALUES (
+            #{fileGrpSn}
+		  , #{fileSn}
+		  , #{fileFullPath}
+		  , #{fileNm}
+		  , #{fileOgnNm}
+		  , #{regIp}
+		  , NOW()
+		  , #{regUserNo}
+        )
+    </insert>
+</mapper>
