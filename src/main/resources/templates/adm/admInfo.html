@@ -25,27 +25,73 @@
 						<tbody>
             				<tr>
             					<th class="f-b">이름</th>
-            					<td><input type="text" id="admNm" name="admNm" maxlength="10" /></td>
+            					<td><input type="text" id="userNm" name="userNm" maxlength="10" readonly th:value="${member.userNm}"/></td>
             				</tr>
             				<tr>
             					<th class="f-b">아이디</th>
-            					<td><input type="text" id="admId" name="admId" maxlength="10" /></td>
+            					<td><input type="text" id="userId" name="userId" maxlength="10" readonly th:value="${member.userId}"//></td>
             				</tr>
             				<tr>
             					<th class="f-b">비밀번호</th>
-            					<td><input type="password" id="admPw" name="admPw" maxlength="10" /></td>
+            					<td><input type="password" id="userPw" name="userPw" maxlength="10" /></td>
             				</tr>
             				<tr>
             					<th class="f-b">비밀번호 확인</th>
-            					<td><input type="password" id="admPw" name="admPw" maxlength="10" /></td>
+            					<td><input type="password" id="userPwChk" name="userPwChk" maxlength="10" /></td>
             				</tr>
             			</tbody>
             		</table>
             	</div>
             	<div class="d-flex justify-c w-100">
-            		<button type="button" class="on f-b info-btn bg-dark10">수정하기</button>
+            		<button type="button" class="on f-b info-btn bg-dark10" onclick="save();">수정하기</button>
             	</div>
             </section>
         </div> <!--/* .content */-->
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+        	$(document).ready(function(){
+        		$('.has_sub').find('a').attr('class', 'off');
+
+        		$("#admMenu").attr('class','on');
+        		$("#admMenu1").attr('class','on');
+        	});
+
+        	/* 저장 버튼 이벤트 */
+        	function save() {
+        		if(chkPwd()) {
+        			var param = {
+                        userPw: $("#userPw").val()
+                    };
+        			var url = '/adm/admUpdate.do';
+                	$.ajax({
+                		url : url,
+                	    type : 'POST',
+                	    data: param,
+                	    success : function(data) {
+                	    	alert("성공적으로 비밀번호가 수정되었습니다.");
+                	    },
+                	    error : function(e) {
+                	    	alert("비밀번호 수정이 실패하였습니다.");
+                	    }
+                	  });
+        		}
+        	}
+
+        	/* 패스워드 체크 */
+          	function chkPwd() {
+          		if($("#userPw").val() != ($("#userPwChk").val())) {
+          			alert("패스워드가 다릅니다. 패스워드를 확인해주세요.");
+          			return false;
+          		}
+          		return true;
+          	}
+
+          	function download() {
+          		qrCode.download({ name: "qr", extension: "jpeg" });
+          	}
+        /*]]>*/
+        </script>
     </th:block>
 </html>

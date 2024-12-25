@@ -38,6 +38,7 @@
                 </div>
                 <div class="tb-box">
                   	<div style="height: 400px; width: 400px;" id="canvas"></div>
+                  	<div id="url"></div>
                 </div>
             </section>
         </div> <!--/* .content */-->
@@ -47,16 +48,20 @@
         /*<![CDATA[*/
         	var qrCode;
         	$(document).ready(function(){
+        		$('.has_sub').find('a').attr('class', 'off');
+
+        		$("#qrMenu").attr('class','on');
+        		$("#qrMenu1").attr('class','on');
         	});
 
 
           	function createQr() {
+          		var url = "https://dongguyouth.co.kr/post/write.do?fcltCd=" + $('#fcltCd').val();
           		qrCode = new QRCodeStyling({
           	        width: 400,
           	        height: 400,
           	        type: "svg",
-          	        data: "https://localhost/post/write.do?fcltCd=" + $('#fcltCd').val(),
-          	        //image: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+          	        data: url,
           	        dotsOptions: {
           	            color: "#4267b2",
           	            type: "rounded"
@@ -72,10 +77,15 @@
 
           		$('#canvas').empty();
           	    qrCode.append(document.getElementById("canvas"));
+          	    $('#url').html("생성 url : " + url);
           	}
 
           	function download() {
-          		qrCode.download({ name: "qr", extension: "jpeg" });
+          		if($('#canvas').children('svg').length > 0) {
+          			qrCode.download({ name: "qr", extension: "jpeg" });
+          		} else {
+          			alert("먼저 QR코드를 생성해주세요.");
+          		}
           	}
         /*]]>*/
         </script>

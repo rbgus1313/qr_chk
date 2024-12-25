@@ -12,6 +12,7 @@ public class LoginVO {
 	private String loginPw;				//관리 사용자 로그인 패스워드
 	private Long attdSn;
 	private String userId;
+	private String userNo;
 	private String regDt;
 	private String userNm;
 	private String telNo;

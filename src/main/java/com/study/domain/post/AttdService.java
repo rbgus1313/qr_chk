@@ -31,11 +31,13 @@ public class AttdService {
     @Transactional
     public Map<String, Object> attdInfoSave(final AttdVO params, MultipartFile[] files) {
     	Map<String, Object> resultMap = new HashMap<String, Object>();
-    	//파일 저장 후 파일그룹순번 세팅
-    	params.setFileGrpSn((int)(fileService.saveFiles(files)).get("fileGrpSn"));
-    	//작성 게시글 저장
-    	if(ObjectUtils.isEmpty(params.getUserId())) {
-    		params.setUserId(UUID.randomUUID().toString());
+    	if(!ObjectUtils.isEmpty(files[0].getOriginalFilename())) {
+    		//파일 저장 후 파일그룹순번 세팅
+        	params.setFileGrpSn((int)(fileService.saveFiles(files)).get("fileGrpSn"));
+        	//작성 게시글 저장
+        	if(ObjectUtils.isEmpty(params.getUserId())) {
+        		params.setUserId(UUID.randomUUID().toString());
+        	}
     	}
     	resultMap.put("regUserId", params.getUserId());
     	resultMap.put("isReg", attdMapper.attdInfoSave(params) > 0 ? "Y" : "N");

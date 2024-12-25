@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.domain.adm.AdmMapper">
+    <!-- 관리자 정보 수정 -->
+    <insert id="admUpdate" parameterType="com.study.domain.adm.AdmVO">
+        UPDATE TB_USER
+           SET USER_PW = #{userPw}
+         WHERE USER_NO = #{userNo}
+    </insert>
+</mapper>

@@ -23,5 +23,6 @@
       SELECT <include refid="attdInfoColumns" />
         FROM TB_USER
 	   WHERE USER_ID = #{loginId}
+	     AND USER_PW = #{loginPw}
     </select>
 </mapper>
